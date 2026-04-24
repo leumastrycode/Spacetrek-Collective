@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import StarsWrapper from "@/components/ui/StarsWrapper";
 import "../globals.css";
 
+
 export default function LandingLayout({
   children,
 }: {
