@@ -8,7 +8,7 @@ export default function Hero() {
           <CollectiveHeroStar />
           <div className="flex flex-row ">
             <h1 className="font-plexMono text-gray-400 text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
-              SUKMA
+              SPACE
             </h1>
             <h1 className="font-plexMono text-indigo-600 text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
               TREK
