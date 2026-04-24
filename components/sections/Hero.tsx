@@ -32,7 +32,7 @@ export default function Hero() {
               />
             </svg>
           </div>
-          <div className="w-96 h-80 bg-indigo-600/10 rounded-full border border-black blur-[140px] absolute -bottom-12.5 hover:blur-[160px] transition-all duration-300 "></div>
+          <div className="w-96 h-80 bg-indigo-600/10 rounded-full border border-black blur-[120px] absolute -bottom-12.5 hover:blur-[160px] transition-all duration-300 "></div>
         </div>
       </div>
     </section>
