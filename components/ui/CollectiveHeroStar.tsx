@@ -13,6 +13,7 @@ export default function CollectiveHeroStar() {
           width={32}
           height={32}
           className="w-12 h-15 absolute -top-8 -right-5 bg-blend-color-dodge"
+          priority
         />
       </div>
     </div>
