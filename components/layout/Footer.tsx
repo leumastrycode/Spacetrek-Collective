@@ -12,6 +12,8 @@ export default function Footer() {
         
         <div className="flex flex-col">
           <div className={`${ibmPlexMono.className} mb-6`}>
+          
+          <div className="font-plexMono mb-6">
             <h2 className="leading-none uppercase">
               <span className="text-[32px] tracking-tighter">
                 SPACE<span className="text-[#3D2FFA]">TREK</span>

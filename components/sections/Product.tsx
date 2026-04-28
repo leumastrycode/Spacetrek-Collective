@@ -1,8 +1,4 @@
 import Image from "next/image";
-import { Roboto } from 'next/font/google';
-
-const robotoRegular = Roboto({ weight: '400', subsets: ['latin'] });
-const robotoMedium = Roboto({ weight: '500', subsets: ['latin'] });
 
 export default function Product() {
   const logoFiles = [
@@ -16,15 +12,15 @@ export default function Product() {
       <div className="max-w-6xl mx-auto">
         
         <div className="mb-16 text-white">
-          <h2 className={`${robotoMedium.className} text-[#FFFFFF] text-[48px] leading-tight mb-0.1`}>
+          <h2 className="font-roboto text-[#FFFFFF] text-[48px] leading-tight mb-0.1">
             Exploring Identity Through Design.
           </h2>
-          <h2 className={`${robotoMedium.className} text-[#FFFFFF] text-[48px] leading-tight mb-6`}>
+          <h2 className="font-roboto text-[#FFFFFF] text-[48px] leading-tight mb-6">
             Work With Us
           </h2>
 
-          <p className={`${robotoRegular.className} text-[#B0BAC5] text-gray-400 max-w-[500px] text-[18px] leading-relaxed`}> 
-            A curated collection of logo projects we've crafted, each representing a unique direction in building strong and future-ready brand identities.
+          <p className="font-roboto text-gray-400 max-w-[500px] text-[18px] leading-relaxed"> 
+            A curated collection of logo projects we&apos;ve crafted, each representing a unique direction in building strong and future-ready brand identities.
           </p>
         </div>
 
