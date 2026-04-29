@@ -87,6 +87,7 @@ export default function VisionCard() {
           width={200}
           height={200}
           className="absolute w-[180px] -top-[-110px] -left-[10px]"
+          priority
         ></Image>
       </div>
       <svg

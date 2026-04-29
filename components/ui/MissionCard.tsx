@@ -81,6 +81,7 @@ export default function MissionCard() {
                   width={300}
                   height={200}
                   className="w-[120px] h-[120px] absolute -top-[50px] right-[-45px] opacity-70 -z-10"
+                  priority
                 />
                 <h1 className="text-[48px] leading-[48px] text-indigo-600">
                   Mission
@@ -125,6 +126,7 @@ export default function MissionCard() {
               width={200}
               height={200}
               className="absolute w-[180px] -top-[0px] -right-[10px]"
+              priority
             ></Image>
           </div>
           <svg
