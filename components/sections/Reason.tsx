@@ -1,23 +1,47 @@
+import Reason1 from "@/assets-svgr/asset-reason1.svg";
+import Reason2 from "@/assets-svgr/asset-reason2.svg";
+import Reason3 from "@/assets-svgr/asset-reason3.svg";
+
 export default function Reason() {
     return(
         <section id="reason">
+            
             <div>
-            <h1 className="font-bold text-center font-roboto text-[#E6EAF0] text-[48px]">Best
+            <div className="mb-[50px]">
+            <h2 className="font-light text-center font-roboto text-[#E6EAF0] text-[48px]">Best
                 <span className="font-bold text-center font-roboto text-[#3D2FFA] text-[48px]"> Reasoned </span>
-            For Choose Our Product</h1>
+            For Choose Our Product</h2>
             </div>
-            <div>
-            <p className="font-inter font-medium text-center text-[#FFFFFF] text-[26px] leading-[119%] tracking-[4%] align-left align-middle">Explorative Approach</p>
-            <p className="font-inter font-regular text-[22px] text-[#E6EAF0] leading-[119%] tracking-[4%] align-center align-middle">We go beyond the obvious to find unique design directions</p>
+
+            <div className="flex justify-center gap-[50px] text-center item-start flex-row">
+            <div className="mb-[10px]">
+                <div className="flex justify-center mb-[15px]">
+                <div className="w-[63px] h-[63px]">
+                <Reason1 />
+                </div>
+                </div>
+            <h6 className="font-inter text-[26px] font-medium leading-[119%] tracking-[4%] align-left align-middle mb-[10px]">Explorative Approach</h6>
+            <p className="text-gray-400 text-[22px] leading-relaxed">We go beyond the obvious to find unique design directions</p>
             </div>
-            <br />
-            <div>
-            <p className="font-inter font-medium text-center text-[#FFFFFF] text-[26px] leading-[119%] tracking-[4%] align-left align-middle">Precision in Detail</p>
-            <p>Every element is crafted with intention</p>
+            <div className="mb-[10px]">
+                <div className="flex justify-center mb-[15px]">
+                <div className="w-[63px] h-[63px]">
+                <Reason2 />
+                </div>
+                </div>
+            <h6 className="font-inter text-[26px] font-medium leading-[119%] tracking-[4%] align-left align-middle mb-[10px]">Precision in Detail</h6>
+            <p className="text-gray-400 text-[22px] leading-relaxed">Every element is crafted with intention</p>
             </div>
-            <div>
-            <p className="font-inter font-medium text-center text-[#FFFFFF] text-[26px] leading-[119%] tracking-[4%] align-left align-middle">Creative Thinking</p>
-            <p className="font-inter font-regular text-[22px] text-[#E6EAF0] leading-[119%] tracking-[4%] align-center align-middle">We turn ideas into strong visual identities</p>
+            <div className="mb-[10px]">
+                <div className="flex justify-center mb-[15px]">
+                <div className="w-[63px] h-[63px]">
+                <Reason3 />
+                </div>
+                </div>
+            <h6 className="font-inter text-[26px] font-medium leading-[119%] tracking-[4%] align-left align-middle mb-[10px]">Creative Thinking</h6>
+            <p className="text-gray-400 text-[22px] leading-relaxed">We turn ideas into strong visual identities</p>
+            </div>
+            </div>
             </div>
         </section>
         
