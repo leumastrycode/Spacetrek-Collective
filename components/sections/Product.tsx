@@ -13,7 +13,7 @@ export default function Product() {
         
         <div className="mb-16 text-white">
           <h2 className="font-roboto text-[#FFFFFF] text-[48px] leading-tight mb-0.1">
-            Exploring Identity Through Design.
+            Exploring Identity <span className="text-indigo-600">Through Design.</span> 
           </h2>
           <h2 className="font-roboto text-[#FFFFFF] text-[48px] leading-tight mb-6">
             Work With Us
