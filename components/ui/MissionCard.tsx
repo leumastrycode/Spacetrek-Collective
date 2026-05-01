@@ -88,7 +88,7 @@ export default function MissionCard() {
                 </h1>
               </div>
             </div>
-            <div className="text-start text-gray-400 text-[24px] font-normal font-roboto leading-1 max-w-[500px] w-auto pl-[64px] flex flex-col gap-2">
+            <div className="text-start text-gray-400 text-[24px] font-normal font-roboto leading-1 max-w-[500px] w-auto pl-[42px] flex flex-col gap-2">
               <div className="flex items-center gap-3">
                 <Image
                   src="/assets/mission-point.svg"

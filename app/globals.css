@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+  scroll-behavior: smooth;
+}
+
 @keyframes driftUp {
   0% {
     transform: translateY(0) translateX(0);
