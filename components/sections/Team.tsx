@@ -10,7 +10,7 @@ export default function Team() {
     <section id="team">
       <div className="flex w-full justify-center items-center px-[70px]">
         <div className="relative flex flex-col pt-[75px] justify-between glass-effect overflow-hidden w-full max-w-[1220px] h-[800px]">
-          <div className="flex flex-row gap-[100px] w-full h-fit pl-[90px]">
+          <div className="flex flex-row gap-[100px] w-full h-fit px-[90px]">
             <div className="flex flex-col gap-[75px] w-full max-w-[610px]">
               <div className="relative flex flex-col gap-[0px]">
                 <div className="flex flex-col gap-[0px]">
