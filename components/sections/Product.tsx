@@ -8,7 +8,7 @@ export default function Product() {
   ];
 
   return (
-    <section id="product" className="py-20 px-6 md:px-24 bg-transparent">
+    <section id="product" className="py-20 px-6 md:px-24 bg-transparent scroll-mt-[50px]">
       <div className="max-w-6xl mx-auto">
         
         <div className="mb-16 text-white">
