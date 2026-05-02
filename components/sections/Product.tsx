@@ -8,12 +8,12 @@ export default function Product() {
   ];
 
   return (
-    <section id="product" className="py-20 px-6 md:px-24 bg-transparent">
+    <section id="product" className="py-20 px-6 md:px-24 bg-transparent scroll-mt-[50px]">
       <div className="max-w-6xl mx-auto">
         
         <div className="mb-16 text-white">
           <h2 className="font-roboto text-[#FFFFFF] text-[48px] leading-tight mb-0.1">
-            Exploring Identity Through Design.
+            Exploring Identity <span className="text-indigo-600">Through Design.</span> 
           </h2>
           <h2 className="font-roboto text-[#FFFFFF] text-[48px] leading-tight mb-6">
             Work With Us
