@@ -32,7 +32,7 @@ export default function MissionCard() {
               stroke="#B0BAC5"
             />
           </svg>
-          <div className="relative flex flex-col justify-start items-start gap-12 glass-effect rounded-tr-[150px] rounded-bl-[150px] overflow-hidden p-6 w-full h-[400px] pt-[75px] px-[100px]">
+          <div className="relative flex flex-col justify-start items-start gap-12 glass-effect shine-rtl rounded-tr-[150px] rounded-bl-[150px] overflow-hidden p-6 w-full h-[400px] pt-[75px] px-[100px]">
             <div className="relative inline-block font-roboto text-left flex-col gap-0 w-full">
               <h3 className="text-3xl font-normal text-slate-200/90 leading-[20px]">
                 Our

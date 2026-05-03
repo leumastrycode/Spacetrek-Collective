@@ -9,15 +9,15 @@ export default function About() {
         <h1 className="text-[48px] text-[#3D2FFA] ml-2">Us</h1>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center justify-between px-[60px] lg:px-[120px] gap-[80px]">
+      <div className="flex flex-row justify-between items-center px-[60px] gap-[80px]">
         
     
-        <div className="w-full lg:w-1/2 flex justify-start">
-          <Company className="w-[282.51px] lg:w-[300px] h-auto" />
+        <div className="w-full flex justify-center">
+          <Company className="w-[282.51px] h-auto max-[950px]" />
         </div>
 
        
-        <div className="w-full lg:w-1/2 flex flex-col items-end text-right gap-[20px]">
+        <div className="w-full flex flex-col items-end text-right gap-[20px]">
           
           <h2 className="text-[#E4E4E4] text-[28px] lg:text-[36px]">
             Navigating brands through the universe of design
