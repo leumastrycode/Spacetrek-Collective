@@ -26,7 +26,7 @@ export default function VisionCard() {
           stroke="#B0BAC5"
         />
       </svg>
-      <div className="relative flex flex-col justify-start items-end gap-12 glass-effect rounded-tl-[150px] rounded-br-[150px] overflow-hidden p-6 w-full h-[400px] pt-[75px] px-[100px]">
+      <div className="relative flex flex-col justify-start items-end gap-12 glass-effect shine-ltr rounded-tl-[150px] rounded-br-[150px] overflow-hidden p-6 w-full h-[400px] pt-[75px] px-[100px]">
         <div className="relative inline-block font-roboto text-right flex-col gap-0 w-full">
           <h3 className="text-3xl font-normal text-indigo-600 leading-[0px]">
             Our

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
@@ -32,17 +32,73 @@ html{
   animation: driftDown 120s linear infinite;
 }
 
-.glass-effect {
-  background: rgba(255,255,255,0.01);
+.glass-box {
+  background: rgba(255, 255, 255, 0.01);
   backdrop-filter: blur(1px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.glass-effect {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.01);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 32px rgba(0,0,0,0.2);
+  overflow: hidden;
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.4), 
+    0 8px 32px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+/* layer cahaya */
+.glass-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  transform: skewX(-20deg) translateX(0);
+  pointer-events: none;
+  will-change: transform;
+  
+  /* gradient cahaya */
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.10) 50%,
+    transparent 80%
+  );
+
+  transform: skewX(-20deg);
+}
+
+/* hover effect */
+.glass-effect:hover::before {
+  animation: shine 0.8s ease forwards;
+}
+
+.glass-effect:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* animasi geser */
+@keyframes shine {
+  0%   { transform: skewX(-20deg) translateX(0); }
+  100% { transform: skewX(-20deg) translateX(400%); }
 }
 
 .black-glass-effect {
   background: rgba(25, 25, 25, 0.85);
   backdrop-filter: blur(1px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 32px rgba(0,0,0,0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .dummy-picture {

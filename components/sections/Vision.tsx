@@ -8,18 +8,18 @@ export default function Vision() {
     <section id="vision" className="scroll-mt-[100px]">
       <div className="w-full flex flex-col justify-center items-center gap-[120px]">
         <div className="w-full flex flex-row gap-[80px] justify-center px-[100px]">
-          <FadeIn delay={0.5} x={-20}>
+          <FadeIn direction='right' delay={0.4}>
             <VisionCard />
           </FadeIn>
-          <FadeIn delay={0.5}>
+          <FadeIn direction='left' delay={0.4}>
             <DotsRectangle className="w-[350px] h-[400px] hidden min-[1220px]:block" />
           </FadeIn>
         </div>
         <div className="w-full flex flex-row gap-[80px] justify-center px-[100px]">
-          <FadeIn delay={0.5} x={-20}>
+          <FadeIn direction='right' delay={0.4}>
             <DotsRectangle className="w-[350px] h-[400px] hidden min-[1220px]:block" />
           </FadeIn>
-          <FadeIn delay={0.5}>
+          <FadeIn direction='left' delay={0.4}>
             <MissionCard />
           </FadeIn>
         </div>

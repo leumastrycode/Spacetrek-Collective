@@ -1,9 +1,12 @@
 import CollectiveHeroStar from "@/components/ui/CollectiveHeroStar";
+import FadeIn from "../animations/FadeIn";
+
 
 export default function Hero() {
   return (
     <section id="hero">
-      <div className="w-full flex justify-center items-center">
+      <FadeIn direction="down">
+         <div className="w-full flex justify-center items-center">
         <div className="flex flex-col items-center w-fit justify-center mt-[400px] relative">
           <CollectiveHeroStar />
           <div className="flex flex-row ">
@@ -35,6 +38,8 @@ export default function Hero() {
           <div className="w-96 h-80 bg-indigo-600/10 rounded-full border border-black blur-[120px] absolute -bottom-12.5 hover:blur-[160px] transition-all duration-300 "></div>
         </div>
       </div>
+      </FadeIn>
+     
     </section>
   );
 }
