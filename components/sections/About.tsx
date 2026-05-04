@@ -1,4 +1,6 @@
-import Company from "@/assets-svgr/company-logo.svg";
+import Image from "next/image";
+import Line from "@/assets-svgr/Line-asset.svg";
+import Pattern from "@/assets-svgr/pattern-block.svg";
 
 export default function About() {
   return (
@@ -13,12 +15,16 @@ export default function About() {
         
     
         <div className="w-full flex justify-center">
-          <Company className="w-[282.51px] h-auto max-[950px]" />
+          <Image 
+          src="/assets/company-logo.png" alt="Company" 
+          width={282.51} 
+          height={238.56}
+          className="w-full max-w-[500px] rounded-[20px]" />
         </div>
 
        
         <div className="w-full flex flex-col items-end text-right gap-[20px]">
-          
+
           <h2 className="text-[#E4E4E4] text-[28px] lg:text-[36px]">
             Navigating brands through the universe of design
           </h2>
