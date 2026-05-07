@@ -25,11 +25,7 @@ export default function About() {
         <div className="flex flex-col lg:flex-row justify-between items-center px-6 sm:px-10 md:px-[80px] lg:gap-[80px] font-roboto">
 
           
-          <FadeIn direction="right">
-            <div className="w-full flex  lg:max-w-[700px] transition-opacity duration-300 opacity-0 min-[1025px]:opacity-100">
-              <Company className="w-[180px] sm:w-[220px] md:w-[282px] h-auto" />
-            </div>
-          </FadeIn>
+          
 
           
           <FadeIn direction="left">
