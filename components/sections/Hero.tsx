@@ -10,17 +10,17 @@ export default function Hero() {
         <div className="flex flex-col items-center w-fit justify-center mt-[400px] relative">
           <CollectiveHeroStar />
           <div className="flex flex-row ">
-            <h1 className="font-plexMono text-gray-400 text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
-              SPACE
-            </h1>
-            <h1 className="font-plexMono text-indigo-600 text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
-              TREK
-            </h1>
+          <h1 className="font-plexMono text-gray-400 text-7xl min-[800px]:text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
+            SPACE
+          </h1>
+          <h1 className="font-plexMono text-indigo-600 text-7xl min-[800px]:text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
+            TREK
+          </h1>
           </div>
           <div className="w-full mt-[20px] justify-start flex flex-col gap-[5px]">
-            <p className="font-inter text-gray-400 text-lg font-normal tracking-wide mt-4 w-full text-start">
+            <p className="font-inter text-gray-400 text-sm min-[800px]:text-lg font-normal tracking-wide mt-4 w-full text-start">
               A collection of our logo products
-            </p>
+              </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="126"
