@@ -6,7 +6,7 @@ import WaveUnderline from "@/components/ui/WaveUnderline";
 import ArrowNav from "@/assets-svgr/nav-arrow.svg";
 
 export default function ColNavbar() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (open) {
