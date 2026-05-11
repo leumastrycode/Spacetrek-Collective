@@ -18,24 +18,23 @@ export default function About() {
               <h1 className="text-[36px] md:text-[48px] text-[#E6EAF0]">About</h1>
               <h1 className="text-[36px] md:text-[48px] text-[#3D2FFA] ml-2">Us</h1>
             </div>
-            <StarLine className="self-end translate-x-[30px]" />
+            <StarLine className="self-end translate-x-[30px]" />                        
           </div>
       </div>
         
-        <div className="flex flex-row justify-between items-center px-6 sm:px-10 md:px-[80px] lg:gap-[80px] font-roboto">
-
+        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-between lg:gap-[80px] font-roboto">
           
           <FadeIn direction="right">
-            <div className="w-full flex  lg:max-w-[700px] transition-opacity duration-300 opacity-0 min-[1000px]:opacity-100">
+           <div className="hidden min-[900px]:flex w-full lg:max-w-[700px] transition-opacity duration-300">
               <Company className="w-[180px] sm:w-[220px] md:w-[282px] h-auto" />
             </div>
           </FadeIn>
 
           
           <FadeIn direction="left">
-              <div className="relative w-full lg:max-w-[800px] ml-auto flex flex-col items-end text-right gap-[20px]">
+            <div className="relative w-full flex flex-col items-end text-right gap-[20px] lg:max-w-[800px] min-w-0">
 
-              <div className="relative w-fit flex justify-end">
+              <div className="relative w-fit flex lg:justify-end">
                 <h2 className="text-[#E4E4E4] text-[22px] sm:text-[28px]">
                 Navigating brands through the universe of design
                 </h2>
