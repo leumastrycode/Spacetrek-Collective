@@ -8,7 +8,7 @@ import StarLine from "@/assets-svgr/star-27.svg";
 export default function About() {
   return (
     <section id="about" className="w-full py-[60px] md:py-[100px]">
-      <div className="w-full flex flex-col justify-center gap-0 gap-[155px]">
+      <div className="w-full flex flex-col justify-center gap-[155px]">
 
        
         <div className="flex justify-center">
