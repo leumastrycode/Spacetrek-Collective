@@ -30,12 +30,12 @@ export default function About() {
             </div>
           </FadeIn>
 
-          
-          <FadeIn direction="left">
-            <div className="relative w-full flex flex-col items-end text-right gap-[20px] lg:max-w-[800px] min-w-0">
+         
+          <FadeIn direction="left" >
+            <div className="relative w-full flex flex-col items-end text-right gap-[20px] lg:max-w-[800px]  min-w-0 ">
 
               <div className="relative w-fit flex lg:justify-end">
-                <h2 className="text-[#E4E4E4] text-[22px] sm:text-[28px]">
+                <h2 className="text-[#E4E4E4] text-[24px] sm:text-[26px] max-w-[400px]">
                 Navigating brands through the universe of design
                 </h2>
                 <Line className="absolute max-[600px]:opacity-0 -top-[50px] -right-[45px]" />
@@ -43,11 +43,11 @@ export default function About() {
 
             <PatternBlock className="absolute -top-[580px] -right-[80px]" />
 
-            <p className="text-[#B0BAC5] text-[16px] sm:text-[18px]">
+            <p className="text-[#B0BAC5] text-[16px] sm:text-[18px] max-w-[600px] ">
               SpaceTrek Collective is a creative design team focused oncrafting distinctive and forward-thinking brand identities.Inspired by exploration and innovation, we help brands find their direction and translate it into clear, impactful visual designs.
             </p>
 
-            <p className="text-[#B0BAC5] text-[16px] sm:text-[18px]">
+            <p className="text-[#B0BAC5] text-[16px] sm:text-[18px] max-w-[600px]">
               Every project is carefully crafted through a collaborative  process, ensuring each identity is unique, purposeful, and built    to stand out.
             </p>
    
@@ -55,6 +55,7 @@ export default function About() {
    
             </div>
           </FadeIn>
+          
         </div>
 
       </div>
