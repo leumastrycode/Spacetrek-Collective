@@ -41,20 +41,15 @@ export default function Footer() {
           <div className="flex space-x-6">
             <Link href="https://github.com/leumastrycode/Spacetrek-Collective.git" target="_blank" rel="noopener noreferrer">
               <Image 
-                src="/assets/github_3.png" 
-                alt="Github" 
-                width={32} 
-                height={32} 
-                className="hover:opacity-80 transition-opacity invert" 
-              />
+                src="/assets/github-1.png" alt="Github" width={32} height={32} className="hover:opacity-80 transition-opacity invert" />
             </Link>
 
             <Link href="https://web.facebook.com/daffa.syarif.507" target="_blank" rel="noopener noreferrer">
-              <Image src="/assets/facebook 1.png" alt="Facebook" width={32} height={32} className="hover:opacity-80 transition-opacity" />
+              <Image src="/assets/facebook-1.png" alt="Facebook" width={32} height={32} className="hover:opacity-80 transition-opacity" />
             </Link>
 
             <Link href="https://www.instagram.com/ekvkaktkql/" target="_blank" rel="noopener noreferrer">
-              <Image src="/assets/instagram 1.png" alt="Instagram" width={32} height={32} className="hover:opacity-80 transition-opacity" />
+              <Image src="/assets/instagram-1.png" alt="Instagram" width={32} height={32} className="hover:opacity-80 transition-opacity" />
             </Link>
           </div>
         </div>
