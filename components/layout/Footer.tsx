@@ -41,7 +41,7 @@ export default function Footer() {
           <div className="flex space-x-6">
             <Link href="https://github.com/leumastrycode/Spacetrek-Collective.git" target="_blank" rel="noopener noreferrer">
               <Image 
-                src="/assets/github 1.png" 
+                src="/assets/github_3.png" 
                 alt="Github" 
                 width={32} 
                 height={32} 
