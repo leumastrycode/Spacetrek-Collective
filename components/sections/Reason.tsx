@@ -17,7 +17,7 @@ export default function Reason() {
             For Choose <br /> Our Product
           </h2>
         </div>
-        <div className="relative flex justify-center gap-[100px] items-start flex-row px-[30px]">
+        <div className="relative flex justify-center gap-[100px] items-start flex-col min-[640px]:flex-row px-[30px]">
           <FirstReason />
           <SecondReason />
           <ThirdReason />

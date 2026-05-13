@@ -10,15 +10,15 @@ export default function Hero() {
         <div className="flex flex-col items-center w-fit justify-center mt-[400px] relative">
           <CollectiveHeroStar />
           <div className="flex flex-row ">
-          <h1 className="font-plexMono text-gray-400 text-7xl min-[800px]:text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
+          <h1 className="font-plexMono text-gray-400 text-[45px] sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-[5.5px] md:tracking-[8.64px] leading-[40px] lg:leading-[65px] text-center">
             SPACE
           </h1>
-          <h1 className="font-plexMono text-indigo-600 text-7xl min-[800px]:text-8xl font-normal tracking-[8.64px] leading-[65px] text-center">
+          <h1 className="font-plexMono text-indigo-600 text-[45px] sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-[5.5px] md:tracking-[8.64px] leading-[40px] lg:leading-[65px] text-center">
             TREK
           </h1>
           </div>
-          <div className="w-full mt-[20px] justify-start flex flex-col gap-[5px]">
-            <p className="font-inter text-gray-400 text-sm min-[800px]:text-lg font-normal tracking-wide mt-4 w-full text-start">
+          <div className="w-full mt-[0px] lg:mt-[20px] justify-start flex flex-col gap-[5px]">
+            <p className="font-inter text-gray-400 text-[10px] sm:text-sm md:text-lg font-normal tracking-wide mt-4 w-full text-start">
               A collection of our logo products
               </p>
             <svg
@@ -27,6 +27,7 @@ export default function Hero() {
               height="6"
               viewBox="0 0 126 6"
               fill="none"
+              className="w-[80px] lg:w-[126px]"
             >
               <path
                 d="M-3.26633e-05 2.88672L2.88672 5.77347L5.77347 2.88672L2.88672 -3.26633e-05L-3.26633e-05 2.88672ZM125.773 2.88672L122.887 -3.26633e-05L120 2.88672L122.887 5.77347L125.773 2.88672ZM2.88672 2.88672V3.38672H122.887V2.88672V2.38672H2.88672V2.88672Z"
