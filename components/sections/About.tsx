@@ -22,7 +22,7 @@ export default function About() {
           </div>
       </div>
         
-        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-between lg:gap-[80px] font-roboto">
+        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-end lg:gap-[80px] font-roboto">
           
           <FadeIn direction="right">
            <div className="hidden min-[900px]:flex w-full lg:max-w-[700px] transition-opacity duration-300">
