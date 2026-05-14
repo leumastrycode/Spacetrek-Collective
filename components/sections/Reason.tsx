@@ -2,6 +2,7 @@ import FirstReason from "@/components/ui/ReasonItem/FirstReason";
 import SecondReason from "@/components/ui/ReasonItem/SecondReason";
 import ThirdReason from "@/components/ui/ReasonItem/ThirdReason";
 import DotsRectangle from "@/assets-svgr/dots-rectangle4.svg";
+import VerticalDotsRectangle from "@/assets-svgr/vertical-dots-rectangle.svg"
 import PatternBlock from "@/assets-svgr/pattern-block.svg";
 import Star from "@/assets-svgr/star 29.svg";
 
@@ -17,12 +18,13 @@ export default function Reason() {
             For Choose <br /> Our Product
           </h2>
         </div>
-        <div className="relative flex justify-center gap-[100px] items-start flex-col min-[640px]:flex-row px-[30px]">
+        <div className="relative flex justify-center gap-[100px] items-start flex-col sm:flex-row px-[30px]">
           <FirstReason />
           <SecondReason />
           <ThirdReason />
-          <DotsRectangle className="absolute -top-[300px] z-[-1]" />
-          <PatternBlock className="absolute -bottom-[500px] z-[-1]" />
+          <DotsRectangle className="absolute hidden sm:block -top-[300px] z-[-1]" />
+          <VerticalDotsRectangle className="absolute block sm:hidden -top-[350px] -left-[98px] z-[-1]" />
+          <PatternBlock className="absolute hidden sm:block -bottom-[400px] z-[-1]" />
         </div>
       </div>
     </section>
