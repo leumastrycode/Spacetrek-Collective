@@ -3,7 +3,7 @@ import FadeIn from "../animations/FadeIn";
 
 export default function Hero() {
   return (
-    <section id="hero" className="h-screen w-full snap-start flex items-center justify-center">
+    <section id="hero" className="min-h-[100dvh] md:h-screen overflow-hidden w-full snap-start flex items-center justify-center">
       <FadeIn direction="down">
         <div className="w-full flex justify-center items-center">
           <div className="flex flex-col items-center w-fit justify-center mt-[100px] relative">

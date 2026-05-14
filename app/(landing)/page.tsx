@@ -14,22 +14,34 @@ export const metadata = {
 export default function Home() {
   return (
     <div className="w-full flex flex-col">
-      <section className="w-full flex-shrink-0 flex items-center justify-center overflow-hidden min-h-screen md:min-h-[100dvh]">
+      <section
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+      >
         <Hero />
       </section>
-      <section className="w-full flex-shrink-0 flex items-center justify-center overflow-hidden min-h-screen md:min-h-[100dvh]">
+      <section
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+      >
         <About />
       </section>
-      <section className="w-full flex-shrink-0 flex items-center justify-center overflow-hidden min-h-screen md:min-h-[100dvh]">
+      <section
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+      >
         <Vision />
       </section>
-      <section className="w-full flex-shrink-0 flex items-center justify-center overflow-hidden min-h-screen md:min-h-[100dvh]">
+      <section
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+      >
         <Team />
       </section>
-      <section className="w-full flex-shrink-0 flex items-center justify-center overflow-hidden min-h-screen md:min-h-[100dvh]">
+      <section
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+      >
         <Reason />
       </section>
-      <section className="w-full flex-shrink-0 flex items-center justify-center overflow-hidden min-h-screen md:min-h-[100dvh]">
+      <section
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+      >
         <Product />
       </section>
     </div>

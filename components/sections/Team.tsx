@@ -54,9 +54,9 @@ export default function Team() {
       <FadeIn direction="right" delay={0.4}>
         <div className="flex w-full justify-center items-center px-4 md:px-[70px]">
           <div className="relative flex flex-col pt-[75px] glass-box overflow-hidden w-full max-w-[1220px] min-h-[800px]">
-            {/* Bagian Atas: Detail & Foto Besar */}
+            {/* Bagian Atas */}
             <div className="flex flex-col min-[900px]:flex-row gap-10 w-full px-6 min-[900px]:px-[90px] mb-12">
-              {/* Sisi Kiri: Deskripsi */}
+              {/* Deskripsi */}
               <div className="flex flex-col gap-8 w-full md:max-w-[610px]">
                 <div className="relative">
                   <h2 className="font-roboto text-gray-400 text-5xl font-normal leading-tight">
@@ -78,7 +78,7 @@ export default function Team() {
                 </div>
               </div>
 
-              {/* Sisi Kanan: Foto Profil Besar */}
+              {/* Foto Profil Besar */}
               <div className="flex flex-col justify-center items-center flex-1 md:pt-[60px]">
                 <div className="relative w-[280px] h-[350px] md:w-[300px] md:h-[400px]">
                   <Image
@@ -92,12 +92,12 @@ export default function Team() {
               </div>
             </div>
 
-            {/* Bagian Bawah: Thumbnail Selector */}
+            {/* Selector */}
             <div className="mt-auto relative w-full black-glass-effect py-8 px-6 md:px-[120px]">
               {/* Asset Orbit */}
               <Orbit4 className="absolute left-0 top-0 pointer-events-none" />
 
-              {/* Container Thumbnail - Dibuat Flex Wrap agar responsive */}
+              {/* Container Thumbnail */}
               <div className="flex flex-wrap gap-6 md:gap-12 relative z-10">
                 {TEAM_DATA.map((member) => (
                   <div
@@ -113,8 +113,8 @@ export default function Team() {
                     <div className="relative w-16 h-16 md:w-20 md:h-20 overflow-hidden rounded-xl">
                       <Image
                         alt={member.name}
-                        src={member.thumbnail} // Mengambil path dari data masing-masing orang
-                        fill // Menggunakan fill agar otomatis mengikuti ukuran div pembungkus
+                        src={member.thumbnail} 
+                        fill 
                         className="object-cover"
                       />
                     </div>
@@ -123,7 +123,6 @@ export default function Team() {
               </div>
             </div>
 
-            {/* Dekorasi Background */}
             <Orbit3 className="absolute -left-[2px] -bottom-[-20px] pointer-events-none" />
             <IndigoStar className="absolute -right-[870px] -top-[40px] -z-10 opacity-50" />
           </div>

@@ -8,6 +8,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @keyframes driftUp {
   0% {
     transform: translateY(0) translateX(0);
