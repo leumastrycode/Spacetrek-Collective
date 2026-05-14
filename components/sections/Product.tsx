@@ -22,7 +22,7 @@ export default function Product() {
   if (!mounted) return null; 
 
   return (
-    <section id="product" className="py-20 px-6 md:px-24 bg-transparent scroll-mt-[50px] relative h-screen w-full snap-start flex items-center justify-center">
+    <section id="product" className="py-20 px-6 md:px-24 bg-transparent scroll-mt-[50px] relative min-h-[100dvh] md:h-screen overflow-hidden w-full snap-start flex items-center justify-center">
       <div className="max-w-6xl mx-auto">
         
         <div className="mb-16 text-white">

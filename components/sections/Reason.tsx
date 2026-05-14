@@ -15,7 +15,7 @@ export default function Reason() {
   }, []);
 
   return (
-    <section id="reason" className="h-screen w-full snap-start flex items-center justify-center">
+    <section id="reason" className="min-h-[100dvh] md:h-screen overflow-hidden w-full snap-start flex items-center justify-center">
       {isMobile ? <ReasonMobile /> : <ReasonWeb />}
     </section>
   );
