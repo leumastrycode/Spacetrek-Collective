@@ -9,7 +9,7 @@ export default function LandingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative no-scrollbar bg-[#0a0a0a] text-white overflow-x-hidden scroll-smooth md:h-[100dvh] md:overflow-y-auto md:snap-y md:snap-mandatory">
+    <div className="relative bg-[#0a0a0a] text-white overflow-x-hidden overflow-y-auto scroll-smooth no-scrollbar">
       <StarsWrapper />
       <div className="relative z-10">
         <Navbar />

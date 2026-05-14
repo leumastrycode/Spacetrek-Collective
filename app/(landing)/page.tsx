@@ -15,32 +15,32 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col">
       <section
-        className="min-h-[100dvh] md:h-[100dvh] w-full md:snap-start flex-shrink-0 flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
       >
         <Hero />
       </section>
       <section
-        className="min-h-[100dvh] md:h-[100dvh] w-full md:snap-start flex-shrink-0 flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
       >
         <About />
       </section>
       <section
-        className="min-h-[100dvh] md:h-[100dvh] w-full md:snap-start flex-shrink-0 flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
       >
         <Vision />
       </section>
       <section
-        className="min-h-[100dvh] md:h-[100dvh] w-full md:snap-start flex-shrink-0 flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
       >
         <Team />
       </section>
       <section
-        className="min-h-[100dvh] md:h-[100dvh] w-full md:snap-start flex-shrink-0 flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
       >
         <Reason />
       </section>
       <section
-        className="min-h-[100dvh] md:h-[100dvh] w-full md:snap-start flex-shrink-0 flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
       >
         <Product />
       </section>

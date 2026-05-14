@@ -8,8 +8,8 @@ export default function Reason() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 800); // 640px adalah breakpoint 'sm' di Tailwind
-    handleResize(); // Cek saat pertama kali load
+    const handleResize = () => setIsMobile(window.innerWidth < 800); 
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
