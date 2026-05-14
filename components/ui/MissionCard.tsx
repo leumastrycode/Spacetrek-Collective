@@ -32,7 +32,7 @@ export default function MissionCard() {
               stroke="#B0BAC5"
             />
           </svg>
-          <div className="relative flex flex-col justify-start items-start gap-12 glass-effect shine-rtl rounded-tr-[150px] rounded-bl-[150px] overflow-hidden p-6 w-full h-[400px] pt-[75px] px-[100px]">
+          <div className="relative flex flex-col justify-start items-start gap-12 glass-effect shine-ltr rounded-tr-[150px] rounded-bl-[150px] overflow-hidden w-full h-[400px] max-sm:h-auto max-sm:pb-[80px] pt-[75px] px-[60px] sm:px-[80px] md:px-[100px]">
             <div className="relative inline-block font-roboto text-left flex-col gap-0 w-full">
               <h3 className="text-3xl font-normal text-slate-200/90 leading-[20px]">
                 Our
@@ -88,7 +88,7 @@ export default function MissionCard() {
                 </h1>
               </div>
             </div>
-            <div className="text-start text-gray-400 text-[24px] font-normal font-roboto leading-1 max-w-[500px] w-auto pl-[42px] flex flex-col gap-2">
+            <div className="text-start text-gray-400 text-[20px] sm:text-[24px] font-normal font-roboto leading-1 max-w-[500px] max-sm:max-w-[300px] w-auto pl-[0px] md:pl-[42px] flex flex-col gap-2">
               <div className="flex items-center gap-3">
                 <Image
                   src="/assets/mission-point.svg"
@@ -125,7 +125,7 @@ export default function MissionCard() {
               alt="Orbit"
               width={200}
               height={200}
-              className="absolute w-[180px] -top-[0px] -right-[10px]"
+              className="absolute w-[180px] bottom-0 -right-[10px]"
               priority
             ></Image>
           </div>
