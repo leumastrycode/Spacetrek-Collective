@@ -3,14 +3,13 @@ import Footer from "@/components/layout/Footer";
 import StarsWrapper from "@/components/ui/StarsWrapper";
 import "../globals.css";
 
-
 export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative bg-[#0a0a0a] text-white min-h-screen overflow-hidden">
+    <div className="relative bg-[#0a0a0a] text-white h-[100dvh] overflow-y-auto overflow-x-hidden snap-y snap-proximity scroll-smooth">
       <StarsWrapper />
       <div className="relative z-10">
         <Navbar />

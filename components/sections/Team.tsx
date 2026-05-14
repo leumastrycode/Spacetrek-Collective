@@ -50,7 +50,7 @@ export default function Team() {
   const [activeMember, setActiveMember] = useState(TEAM_DATA[0]);
 
   return (
-    <section id="team" className="scroll-mt-[100px] py-10">
+    <section id="team" className="scroll-mt-[100px] py-10 h-screen w-full snap-start flex items-center justify-center">
       <FadeIn direction="right" delay={0.4}>
         <div className="flex w-full justify-center items-center px-4 md:px-[70px]">
           <div className="relative flex flex-col pt-[75px] glass-box overflow-hidden w-full max-w-[1220px] min-h-[800px]">
