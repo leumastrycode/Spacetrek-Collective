@@ -3,7 +3,17 @@
 @tailwind utilities;
 
 html {
+  overflow-x: hidden;
+  height: 100%;
   scroll-behavior: smooth;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @keyframes driftUp {
