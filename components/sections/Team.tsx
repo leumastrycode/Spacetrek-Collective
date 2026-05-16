@@ -19,12 +19,12 @@ const TEAM_DATA = [
   },
   {
     id: 2,
-    name: "Sahurul",
+    name: "Ahmad Taufik Sahrul Hidayat",
     role: "Frontend & Integration Dev",
     description:
       "Fokus pada pengembangan logika sisi klien dan integrasi API melalui data fetching, memastikan sinkronisasi data antara antarmuka pengguna dengan layanan backend berjalan secara efisien.",
-    image: "/assets/dummy-picture.svg",
-    thumbnail: "/assets/team-photo/team-sahrul.jpeg",
+    image: "/assets/team-photo/Sahrul.jpeg",
+    thumbnail: "/assets/team-photo/Sahrul2.jpeg",
   },
   {
     id: 3,

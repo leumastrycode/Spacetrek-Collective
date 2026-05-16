@@ -27,7 +27,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-between lg:gap-[80px] font-roboto">
+        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-end lg:gap-[80px] font-roboto">
           <FadeIn direction="right">
             <div className="hidden min-[900px]:flex w-full lg:max-w-[700px] transition-opacity duration-300">
               <Company className="w-[180px] sm:w-[220px] md:w-[282px] h-auto" />
@@ -40,7 +40,7 @@ export default function About() {
                 <h2 className="text-[#E4E4E4] text-[22px] sm:text-[28px]">
                   Navigating brands through the universe of design
                 </h2>
-                <Line className="absolute -top-[50px] -right-[45px]" />
+                <Line className="absolute max-[600px]:hidden -top-[50px] -right-[45px]" />
               </div>
 
               <PatternBlock className="absolute -top-[580px] -right-[80px]" />
@@ -60,6 +60,7 @@ export default function About() {
               </p>
             </div>
           </FadeIn>
+          
         </div>
       </div>
     </section>

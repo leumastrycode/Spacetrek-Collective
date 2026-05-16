@@ -21,8 +21,8 @@ export default function ReasonMobile() {
     <section id="reason">
       <div className="w-full flex flex-col justify-center items-center gap-[85px]">
         <div className="relative w-fit flex justify-center items-center">
-          <Star className="absolute -top-[20px] -right-[20px]" />
-          <h2 className="px-[20px] font-roboto font-normal text-[35px] sm:text-[40px] md:text-[48px] leading-[100%] tracking-[-0.03em] text-center text-[#E6EAF0]">
+          <Star className="absolute -top-[20px] -right-[20px] max-[434px]:-top-[20px] max-[434px]:-right-[20px]" />
+          <h2 className="px-[20px] font-roboto font-normal text-[35px] max-[434px]:text-[23px] sm:text-[40px] md:text-[48px] leading-[100%] tracking-[-0.03em] text-center text-[#E6EAF0]">
             Best
             <span className="text-[#3D2FFA]"> Reasoned </span>
             For Choose <br /> Our Product
