@@ -1,6 +1,6 @@
 import Company from "@/assets-svgr/company-logo.svg";
 import Line from "@/assets-svgr/about-top-line.svg";
-import PatternBlock from "@/assets-svgr/pattern-block2.svg";
+import PatternBlock from "@/assets-svgr/pattern-block3.svg";
 import FadeIn from "../animations/FadeIn";
 import Star from "@/assets-svgr/star 29.svg";
 import StarLine from "@/assets-svgr/star-27.svg";
@@ -27,7 +27,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-end lg:gap-[80px] font-roboto">
+        <div className="flex flex-row items-center px-6 sm:px-10 md:px-[80px] lg:justify-center lg:gap-[80px] font-roboto">
           <FadeIn direction="right">
             <div className="hidden min-[900px]:flex w-full lg:max-w-[700px] transition-opacity duration-300">
               <Company className="w-[180px] sm:w-[220px] md:w-[282px] h-auto" />
@@ -37,15 +37,15 @@ export default function About() {
           <FadeIn direction="left">
             <div className="relative w-full flex flex-col items-end text-right gap-[20px] lg:max-w-[800px] min-w-0">
               <div className="relative w-fit flex lg:justify-end">
-                <h2 className="text-[#E4E4E4] text-[22px] sm:text-[28px]">
+                <h2 className="text-[#E4E4E4] text-[22px] sm:text-[30px]">
                   Navigating brands through the universe of design
                 </h2>
-                <Line className="absolute max-[600px]:hidden -top-[50px] -right-[45px]" />
+                <Line className="absolute max-[500px]:hidden -top-[50px] -right-[45px]" />
               </div>
 
-              <PatternBlock className="absolute -top-[580px] -right-[80px]" />
+              <PatternBlock className="absolute -top-[650px] -left-[300px]" />
 
-              <p className="text-[#B0BAC5] text-[16px] sm:text-[18px]">
+              <p className="text-[#B0BAC5] text-[16px] sm:text-[20px]">
                 SpaceTrek Collective is a creative design team focused
                 oncrafting distinctive and forward-thinking brand
                 identities.Inspired by exploration and innovation, we help
@@ -53,7 +53,7 @@ export default function About() {
                 impactful visual designs.
               </p>
 
-              <p className="text-[#B0BAC5] text-[16px] sm:text-[18px]">
+              <p className="text-[#B0BAC5] text-[16px] sm:text-[20px]">
                 Every project is carefully crafted through a collaborative
                 process, ensuring each identity is unique, purposeful, and built
                 to stand out.

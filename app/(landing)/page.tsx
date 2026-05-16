@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col">
       <section
-        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden py-16"
+        className="min-h-[100dvh] w-full flex-shrink-0 flex items-center justify-center overflow-hidden"
       >
         <Hero />
       </section>

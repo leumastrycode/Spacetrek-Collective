@@ -53,7 +53,7 @@ export default function Team() {
     <section id="team" className="scroll-mt-[100px] py-10 min-h-[100dvh] md:h-screen overflow-hidden w-full snap-start flex items-center justify-center">
       <FadeIn direction="right" delay={0.4}>
         <div className="flex w-full justify-center items-center px-4 md:px-[70px]">
-          <div className="relative flex flex-col pt-[75px] glass-box overflow-hidden w-full max-w-[1220px] min-h-[800px]">
+          <div className="relative flex flex-col pt-[75px] glass-box overflow-hidden w-full max-w-[1220px] min-h-[600px] sm:min-h-[800px]">
             {/* Bagian Atas */}
             <div className="flex flex-col min-[900px]:flex-row gap-10 w-full px-6 min-[900px]:px-[90px] mb-12">
               {/* Deskripsi */}
@@ -65,7 +65,7 @@ export default function Team() {
                   <p className="text-gray-400 text-xl font-roboto tracking-wide uppercase">
                     {activeMember.role}
                   </p>
-                  <LineAsset className="absolute -left-[50px] -bottom-[20px] hidden md:block" />
+                  <LineAsset className="absolute -left-[50px] -bottom-[20px]" />
                 </div>
 
                 <div className="min-h-[150px]">
@@ -80,7 +80,7 @@ export default function Team() {
 
               {/* Foto Profil Besar */}
               <div className="flex flex-col justify-center items-center flex-1 md:pt-[60px]">
-                <div className="relative w-[280px] h-[350px] md:w-[300px] md:h-[400px]">
+                <div className="relative sm:w-[250px] sm:h-[320px] md:w-[300px] md:h-[400px]">
                   <Image
                     src={activeMember.image}
                     alt={activeMember.name}
