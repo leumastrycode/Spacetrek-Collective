@@ -1,7 +1,14 @@
-import db from "@/lib/db";
+import supabase from "@/lib/db";
 
 export async function GET() {
-  const [rows] = await db.query("SELECT * FROM users");
 
-  return Response.json(rows);
+  const { data, error } = await supabase
+    .from("users")
+    .select("*");
+
+  return Response.json({
+    data,
+    error
+  });
+
 }

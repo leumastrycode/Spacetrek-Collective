@@ -1,10 +1,8 @@
-import mysql from "mysql2/promise";
+import { createClient } from "@supabase/supabase-js";
 
-const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_KEY!
+);
 
-export default db;
+export default supabase;
