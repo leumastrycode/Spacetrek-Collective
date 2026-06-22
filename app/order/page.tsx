@@ -4,6 +4,8 @@ import StarsWrapper from "@/components/ui/StarsWrapper";
 import Step1 from "@/components/OrderSteps/Step1";
 import Step2 from "@/components/OrderSteps/Step2";
 import Step3 from "@/components/OrderSteps/Step3";
+import Step4 from "@/components/OrderSteps/Step4";
+import Step5 from "@/components/OrderSteps/Step5";
 import { useState } from "react";
 import LoginModal from "@/components/ui/Modal/ModalLogin";
 import RegisterModal from "@/components/ui/Modal/ModalRegister";
@@ -76,8 +78,12 @@ export default function OrderPage() {
           <Step1 onNext={(data) => handleNextStep({ purpose: data.purpose })} />
         ) : currentStep === 2 ? (
           <Step2 onNext={(data) => handleNextStep({ field: data.field })} />
-        ) : (
+        ) : currentStep === 3 ? (
           <Step3 onNext={(data) => handleNextStep({ style: data.style })} />
+        ) : currentStep === 4 ? (
+          <Step4 onNext={(data) => handleNextStep({ color: data.color })} />
+        ) : (
+          <Step5 onNext={(data) => handleNextStep({ impression: data.impression })} />
         )}
       </section>
     </div>
