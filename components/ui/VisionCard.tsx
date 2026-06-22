@@ -26,7 +26,8 @@ export default function VisionCard() {
           stroke="#B0BAC5"
         />
       </svg>
-      <div className="relative flex flex-col justify-start items-end gap-12 glass-effect shine-ltr rounded-tl-[150px] rounded-br-[150px] overflow-hidden p-6 w-full h-[400px] pt-[75px] px-[100px]">
+      <div className="relative flex flex-col justify-start items-end gap-12 glass-effect shine-ltr rounded-tl-[150px] rounded-br-[150px] overflow-hidden w-full h-[400px] max-sm:h-auto max-sm:pb-[80px] pt-[75px] px-[60px] sm:px-[80px] md:px-[100px]">
+        {/* SubTitle */}
         <div className="relative inline-block font-roboto text-right flex-col gap-0 w-full">
           <h3 className="text-3xl font-normal text-indigo-600 leading-[0px]">
             Our
@@ -77,7 +78,7 @@ export default function VisionCard() {
             </h1>
           </div>
         </div>
-        <p className="text-right text-gray-400 text-[24px] font-normal font-roboto leading-1 max-w-[500px] w-auto pr-[32px]">
+        <p className="text-right text-gray-400 text-[20px] sm:text-[22px] md:text-[24px] font-normal font-roboto leading-1 max-w-[500px]  w-auto max-sm:max-w-[300px] pr-[0px] md:pr-[32px]">
           To guide brands in discovering their identity through explorative and
           forward-thinking design.
         </p>
@@ -86,7 +87,7 @@ export default function VisionCard() {
           alt="Orbit"
           width={200}
           height={200}
-          className="absolute w-[180px] -top-[-110px] -left-[10px]"
+          className="absolute w-[180px] bottom-0 -left-[10px]"
           priority
         ></Image>
       </div>
