@@ -13,7 +13,7 @@ export default function RowNavbar() {
       <div className="fixed top-[20px] w-full flex justify-end mt-20px z-50">
         <div
           className={`fixed w-auto bg-[#0f0f0f] flex flex-row
-             justify-end items-center z-50 font-sans text-[20px] text-gray-400 rounded-tl-[50px] rounded-bl-[50px] glass-box overflow-hidden pl-[10px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+             justify-end items-center z-50 font-sans text-[20px] text-gray-400 rounded-tl-[0px] rounded-bl-[50px] glass-box overflow-hidden pl-[20px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
             ${
               open ? "translate-x-0 opacity-100 ml-2" : "translate-x-[86%] ml-0"
             }`}
