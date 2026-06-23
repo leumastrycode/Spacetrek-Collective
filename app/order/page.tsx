@@ -6,12 +6,17 @@ import Step2 from "@/components/OrderSteps/Step2";
 import Step3 from "@/components/OrderSteps/Step3";
 import Step4 from "@/components/OrderSteps/Step4";
 import Step5 from "@/components/OrderSteps/Step5";
+import OrderDraft from "@/components/OrderSteps/OrderDraft";
+import SuccessModal from "@/components/ui/Modal/SuccesModal";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LoginModal from "@/components/ui/Modal/ModalLogin";
-import RegisterModal from "@/components/ui/Modal/ModalRegister";
 
 export default function OrderPage() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showSuccess, setShowSuccess] = useState(false) // 4. State modal sukses
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     purpose: "",
     field: "",
@@ -21,7 +26,7 @@ export default function OrderPage() {
   });
 
   // State untuk status login (nanti diisi oleh data real Supabase)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // State untuk mengontrol kemunculan modal kamu
   const [showLogin, setShowLogin] = useState(false);
@@ -31,6 +36,11 @@ export default function OrderPage() {
   const handleNextStep = (newData: Partial<typeof formData>) => {
     setFormData((prev) => ({ ...prev, ...newData }));
     setCurrentStep((prev) => prev + 1);
+  };
+
+  // Fungsi untuk mengupdate data tanpa pindah step
+  const handleUpdateData = (updatedData: Partial<typeof formData>) => {
+    setFormData((prev) => ({ ...prev, ...updatedData }));
   };
 
   // Fungsi untuk kembali ke step sebelumnya
@@ -47,28 +57,36 @@ export default function OrderPage() {
       setShowLogin(true);
     } else {
       // Jika sudah login, langsung jalankan fungsi simpan ke Supabase
-      saveOrderToSupabase();
+      saveOrderToAzure();
     }
   };
 
-  // Fungsi yang nanti akan diisi oleh tim backend kamu
-  const saveOrderToSupabase = async () => {
-    console.log("Mengirim data ini ke database Supabase:", formData);
-    alert("Project Initiated! Data berhasil disimpan ke database.");
-    // Di sini nanti ada proses redirect ke halaman admin atau client dashboard
-  };
+// Fungsi yang nanti akan diisi oleh tim backend kamu untuk koneksi ke Azure
+const saveOrderToAzure = async () => {
+  console.log("Mengirim data ini ke server Azure:", formData)
+  
+  // Nanti tim backend tinggal memasukkan logic fetch API Azure di sini
+  
+  // Munculkan modal sukses
+  setShowSuccess(true)
+
+  // Beri jeda 3,5 detik agar user bisa melihat animasinya, lalu pindah ke home
+  setTimeout(() => {
+    router.push('/')
+  }, 3500)
+}
   return (
     <div className="relative bg-[#0a0a0a] text-white overflow-x-hidden overflow-y-auto scroll-smooth no-scrollbar">
       <StarsWrapper />
       {/* Back Button */}
       <div className="z-50 w-full flex-shrink-0 flex items-start justify-center overflow-hidden">
         <div className="w-full max-w-[600px] md:max-w-[1400px] mx-4 md:mx-[60px]">
-          {currentStep > 1 && (
+          {currentStep > 1 && currentStep < 6 && (
             <button
               onClick={handlePrevStep}
-              className=" mt-[100px] px-4 py-2 border-white border-[1px] bg-transparent hover:bg-indigo-700 text-white rounded-[5px] transition-colors "
+              className=" mt-[100px] px-4 py-2 border-white/20 border-[1px] bg-transparent hover:scale-105 text-white rounded-[5px] transition-all duration-300 flex items-center gap-2"
             >
-             <span className="group-hover:-translate-x-1 transition-transform">←</span> PREV PHASE
+             <span className="group-hover:-translate-x-1 transition-transform">←</span> PREV <span className="text-indigo-600">PHASE</span>
             </button>
           )}
         </div>
@@ -82,10 +100,19 @@ export default function OrderPage() {
           <Step3 onNext={(data) => handleNextStep({ style: data.style })} />
         ) : currentStep === 4 ? (
           <Step4 onNext={(data) => handleNextStep({ color: data.color })} />
-        ) : (
+        ) : currentStep === 5 ? (
           <Step5 onNext={(data) => handleNextStep({ impression: data.impression })} />
-        )}
+        ) : currentStep === 6 ? (
+          <OrderDraft
+            data={formData}
+            onTransmit={handleTransmit}
+            onUpdateData={handleUpdateData}
+          />
+        ) : null}
       </section>
+
+      {/* 6. Render SuccessModal jika showSuccess bernilai true */}
+      {showSuccess && <SuccessModal />}
     </div>
   );
 }

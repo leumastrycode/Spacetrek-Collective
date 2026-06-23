@@ -42,7 +42,7 @@ export default function Step4({ onNext }: Step4Props) {
    
 
       {/* Form */}
-      <div className="glass-effect justify-center text-black rounded-[10px] max-w-[600px] md:max-w-[1400px] w-full shadow-2xl relative p-6 sm:p-10 md:p-[90px]">
+      <div className="glass-effect-no-hover justify-center text-black rounded-[10px] max-w-[600px] md:max-w-[1400px] w-full shadow-2xl relative p-6 sm:p-10 md:p-[90px]">
         {/* Title */}
         <div className="self-stretch h-12 justify-center relative">
           <span className="text-indigo-600 text-[18px] sm:text-[24px] md:text-[40px] font-normal font-['Roboto'] leading-none">
