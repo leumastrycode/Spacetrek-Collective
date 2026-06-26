@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { button } from "framer-motion/client";
 
 export default function Product() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -42,6 +44,11 @@ export default function Product() {
             A curated collection of logo projects we&apos;ve crafted.
             Each representing a unique direction in building strong and future-ready brand identities.
           </p>
+          <Link href="/order">
+            <button className="z-10 relative px-8 mt-[20px] font-roboto sm:px-10 md:px-12 py-2.5 sm:py-3 md:py-4 bg-white text-black font-bold rounded-full hover:bg-indigo-600 hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.3)] text-[11px] sm:text-sm md:text-base tracking-widest">
+              Make your logo
+            </button>
+          </Link>
         </div>
 
         <div className="block md:hidden relative">

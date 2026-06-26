@@ -10,5 +10,3 @@ export async function GET() {
     data,
     error
   });
-
-}
