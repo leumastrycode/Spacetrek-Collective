@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from "@/lib/supabase";
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -9,6 +10,9 @@ interface RegisterModalProps {
 }
 
 export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: RegisterModalProps) {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
   if (isOpen) {
@@ -52,17 +56,23 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
           <input
             type="text"
             placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
           />
           <input
             type="email"
             placeholder="Email"
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <p className="text-white text-[16px] justify-start w-full max-w-[450px]">
