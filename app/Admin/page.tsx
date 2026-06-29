@@ -4,6 +4,7 @@ import StarsWrapper from "@/components/ui/StarsWrapper";
 import DashboardNav from "@/components/ui/Dashboard/Nav";
 import Sidebar from "@/components/ui/Dashboard/SideBar";
 import Dashboard from "@/components/ui/Dashboard/Dashboard";
+import UserDashboard from "@/components/ui/Dashboard/UserDashboard";
 import { useState } from "react";
 
 export default function AdminPage() {
@@ -25,7 +26,7 @@ export default function AdminPage() {
 
         {activeTab === "users" && (
           <div className="p-5">
-            <h2 className="text-2xl font-bold mb-4">Users</h2>
+            <UserDashboard />
           </div>
         )}
       </main>
