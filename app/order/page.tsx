@@ -9,8 +9,9 @@ import Step5 from "@/components/OrderSteps/Step5";
 import OrderDraft from "@/components/OrderSteps/OrderDraft";
 import SuccessModal from "@/components/ui/Modal/SuccesModal";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginModal from "@/components/ui/Modal/ModalLogin";
+import { supabase } from "@/lib/supabase";
 
 export default function OrderPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -26,11 +27,18 @@ export default function OrderPage() {
   });
 
   // State untuk status login (nanti diisi oleh data real Supabase)
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // State untuk mengontrol kemunculan modal kamu
   const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
 
   // Fungsi untuk mengumpulkan data dari tiap step dan lanjut ke step berikutnya
   const handleNextStep = (newData: Partial<typeof formData>) => {
@@ -57,24 +65,49 @@ export default function OrderPage() {
       setShowLogin(true);
     } else {
       // Jika sudah login, langsung jalankan fungsi simpan ke Supabase
-      saveOrderToAzure();
+      saveOrderToSupabase();
     }
   };
 
 // Fungsi yang nanti akan diisi oleh tim backend kamu untuk koneksi ke Azure
-const saveOrderToAzure = async () => {
-  console.log("Mengirim data ini ke server Azure:", formData)
-  
-  // Nanti tim backend tinggal memasukkan logic fetch API Azure di sini
-  
-  // Munculkan modal sukses
-  setShowSuccess(true)
+const saveOrderToSupabase = async () => {
 
-  // Beri jeda 3,5 detik agar user bisa melihat animasinya, lalu pindah ke home
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  // Cek apakah user benar-benar login
+  if (!user.id) {
+    alert("Silakan login terlebih dahulu.");
+    return;
+  }
+
+  console.log("Form Data :", formData);
+  console.log("User :", user);
+
+  const { error } = await supabase
+    .from("order")
+    .insert([
+      {
+        purpose: formData.purpose,
+        field: formData.field,
+        style: formData.style,
+        color: formData.color,
+        impression: formData.impression,
+        user_id: user.id,
+      },
+    ]);
+
+  if (error) {
+    console.error("Supabase Error:", error);
+    alert(error.message);
+    return;
+  }
+
+  setShowSuccess(true);
+
   setTimeout(() => {
-    router.push('/')
-  }, 3500)
-}
+    router.push("/");
+  }, 3500);
+};
   return (
     <div className="relative bg-[#0a0a0a] text-white overflow-x-hidden overflow-y-auto scroll-smooth no-scrollbar">
       <StarsWrapper />
@@ -113,6 +146,14 @@ const saveOrderToAzure = async () => {
 
       {/* 6. Render SuccessModal jika showSuccess bernilai true */}
       {showSuccess && <SuccessModal />}
+
+      {showLogin && (
+        <LoginModal
+          isOpen={showLogin}
+          onClose={() => setShowLogin(false)}
+          onSwitchToRegister={() => {}}
+        />
+    )}
     </div>
   );
 }
