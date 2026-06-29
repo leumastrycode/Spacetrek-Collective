@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect } from 'react';
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -10,7 +11,35 @@ interface LoginModalProps {
 
 export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: LoginModalProps) {
  
-   useEffect(() => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    // Email tidak ditemukan
+    if (error || !data) {
+        alert("Email tidak ditemukan.");
+      return;
+    }
+
+    // Password salah
+    if (data.password !== password) {
+      alert("Password salah.");
+      return;
+    }
+
+    // Login berhasil
+    alert(`Selamat datang, ${data.full_name}!`);
+  };
+
+  useEffect(() => {
    if (isOpen) {
      document.documentElement.style.overflow = 'hidden';
      document.body.style.overflow = 'hidden';
@@ -36,7 +65,9 @@ export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: Logi
         </button>
 
         {/* Form Login */}
-        <form className="flex flex-col justify-center items-center w-full mt-[40px] gap-[30px]">
+        <form 
+        onSubmit={handleLogin}
+        className="flex flex-col justify-center items-center w-full mt-[40px] gap-[30px]">
           <div className="relative inline-block w-full max-w-[450px]">
             <h2 className="text-[40px] w-full max-w-[450px] text-start text-indigo-100 font-roboto mb-4">
               <span className="text-indigo-600">Lo</span>gin
@@ -52,11 +83,15 @@ export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: Logi
           <input
             type="email"
             placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
           />
           <input
             type="password"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
           />
 

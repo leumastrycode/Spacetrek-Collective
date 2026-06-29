@@ -14,6 +14,26 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          full_name: fullName,
+          email: email,
+          password: password,
+        },
+      ]);
+
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Register berhasil!", data);
+    }
+  };
+
   useEffect(() => {
   if (isOpen) {
     document.documentElement.style.overflow = 'hidden';
@@ -40,7 +60,9 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
         </button>
 
         {/* Form Register */}
-        <form className="flex flex-col justify-center items-center w-full mt-[40px] gap-[30px]">
+        <form 
+        onSubmit={handleRegister}
+        className="flex flex-col justify-center items-center w-full mt-[40px] gap-[30px]">
           <div className="relative inline-block w-full max-w-[450px]">
             <h2 className="text-[40px] w-full max-w-[450px] text-start text-indigo-100 font-roboto mb-4">
               <span className="text-indigo-600">Re</span>gister
@@ -98,3 +120,4 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
     </div>
   );
 }
+
