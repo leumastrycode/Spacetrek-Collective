@@ -37,6 +37,7 @@ export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: Logi
     }
 
     // Login berhasil
+    localStorage.setItem("user", JSON.stringify(data)); // seluruh data user disimpan di browser
     alert(`Selamat datang, ${data.full_name}!`);
 
     onClose();
