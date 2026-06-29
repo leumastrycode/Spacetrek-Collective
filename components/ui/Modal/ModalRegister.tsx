@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from "@/lib/supabase";
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -9,6 +10,38 @@ interface RegisterModalProps {
 }
 
 export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: RegisterModalProps) {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          full_name: fullName,
+          email: email,
+          password: password,
+        },
+      ]);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert("Register berhasil! Silakan login.");
+
+    // Kosongkan input
+    setFullName("");
+    setEmail("");
+    setPassword("");
+
+    // Pindah ke modal Login
+    onSwitchToLogin();
+  };
 
   useEffect(() => {
   if (isOpen) {
@@ -36,7 +69,9 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
         </button>
 
         {/* Form Register */}
-        <form className="flex flex-col justify-center items-center w-full mt-[40px] gap-[30px]">
+        <form 
+        onSubmit={handleRegister}
+        className="flex flex-col justify-center items-center w-full mt-[40px] gap-[30px]">
           <div className="relative inline-block w-full max-w-[450px]">
             <h2 className="text-[40px] w-full max-w-[450px] text-start text-indigo-100 font-roboto mb-4">
               <span className="text-indigo-600">Re</span>gister
@@ -52,17 +87,23 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
           <input
             type="text"
             placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
           />
           <input
             type="email"
             placeholder="Email"
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
             className="text-white text-[20px] border border-indigo-600 p-4 rounded-[3px] bg-transparent w-full max-w-[450px] placeholder:text-gray-400 placeholder:italic placeholder:text-[18px]"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <p className="text-white text-[16px] justify-start w-full max-w-[450px]">
@@ -88,3 +129,4 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
     </div>
   );
 }
+
