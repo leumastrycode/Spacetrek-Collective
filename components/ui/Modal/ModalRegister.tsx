@@ -28,10 +28,19 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
       ]);
 
     if (error) {
-      console.error(error);
-    } else {
-      console.log("Register berhasil!", data);
+      alert(error.message);
+      return;
     }
+
+    alert("Register berhasil! Silakan login.");
+
+    // Kosongkan input
+    setFullName("");
+    setEmail("");
+    setPassword("");
+
+    // Pindah ke modal Login
+    onSwitchToLogin();
   };
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
@@ -10,7 +11,7 @@ interface LoginModalProps {
 }
 
 export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: LoginModalProps) {
- 
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,6 +38,10 @@ export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: Logi
 
     // Login berhasil
     alert(`Selamat datang, ${data.full_name}!`);
+
+    onClose();
+
+    router.push("/");
   };
 
   useEffect(() => {
