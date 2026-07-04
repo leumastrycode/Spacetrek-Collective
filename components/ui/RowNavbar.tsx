@@ -53,7 +53,7 @@ export default function RowNavbar() {
           <NavItem href="#vision">Vision</NavItem>
           <NavItem href="#team">Team</NavItem>
           <NavItem href="#product">Product</NavItem>
-          {isLoggedIn && <NavItem href="/Profile">Profile</NavItem>}
+          {isLoggedIn && <NavItem href="/profile">Profile</NavItem>}
         </div>
       </div>
     </section>
