@@ -35,6 +35,7 @@ type OrderRow = {
   color: string | null;
   impression: string | null;
   user_id: string;
+  order_status: string; // "in progress" | "done"
 };
 
 export default function Dashboard() {
@@ -61,7 +62,7 @@ export default function Dashboard() {
       // 2. Semua order (dipakai untuk total, finished, dan analytics)
       const { data: ordersData, error: ordersError } = await supabase
         .from("order")
-        .select("id, created_at, purpose, field, style, color, impression, user_id");
+        .select("id, created_at, purpose, field, style, color, impression, user_id, order_status");
 
       if (ordersError) {
         console.error("Gagal ambil data order:", ordersError.message);
@@ -73,7 +74,10 @@ export default function Dashboard() {
         // Sementara pakai total order sebagai placeholder.
         // Ganti logic ini kalau kolom status sudah ditambahkan, contoh:
         // setFinishedOrders(ordersData.filter(o => o.status === "finished").length);
-        setFinishedOrders(ordersData.length);
+        const finishedCount = ordersData.filter(
+          (order) => order.order_status?.toLowerCase().trim() === "done"
+        ).length;
+        setFinishedOrders(finishedCount);
       }
 
       setTotalUsers(usersCount ?? 0);
@@ -83,21 +87,63 @@ export default function Dashboard() {
     fetchDashboardData();
   }, []);
 
+  // Daftar value preset resmi per kategori (diambil dari Step1-Step5)
+// Kalau value order TIDAK ada di daftar ini, berarti itu inputan custom user
+const PRESET_OPTIONS: Record<string, string[]> = {
+  purpose: [
+    "Companies / Startups",
+    "Personal Branding",
+    "Communities / Organizations / Esports Teams",
+    "Specific Projects / Products",
+  ],
+  field: [
+    "Technology / IT / Software Development",
+    "Crypto / Web3 / FinTech",
+    "Gaming / Digital Entertainment",
+    "Fashion / Modern Lifestyle",
+    "Food & Beverage / Culinary",
+  ],
+  style: [
+    "Minimalist",
+    "Cyberpunk",
+    "Sci-Fi & Space",
+    "Synthwave / Retro-Futurism",
+  ],
+  color: [
+    "Dark Tech / Monochrome",
+    "Neon Vibes",
+    "Deep Space",
+    "Eco-Tech",
+  ],
+  impression: [
+    "Innovative and Visionary",
+    "Fast, Dynamic, and Aggressive",
+    "Mysterious, Premium, and Luxurious",
+    "Friendly, Open, and Accessible",
+  ],
+};
+
   // Hitung chart data untuk tab aktif dari data order yang sudah di-fetch
   const currentChartData = useMemo(() => {
-    const column = tabColumnMap[activeTab];
-    const counts: Record<string, number> = {};
+  const column = tabColumnMap[activeTab]; // "purpose" | "field" | "style" | "color" | "impression"
+  const presetList = PRESET_OPTIONS[column] || [];
+  const counts: Record<string, number> = {};
 
-    orders.forEach((order) => {
-      const rawValue = order[column];
-      const value = rawValue && rawValue.trim() !== "" ? rawValue : "Custom";
-      counts[value] = (counts[value] || 0) + 1;
-    });
+  orders.forEach((order) => {
+    const rawValue = order[column];
+    const trimmed = rawValue?.trim();
 
-    return Object.entries(counts)
-      .map(([name, total]) => ({ name, total }))
-      .sort((a, b) => b.total - a.total);
-  }, [orders, activeTab]);
+    // Kosong ATAU tidak ada di daftar preset resmi -> masuk kategori "Custom"
+    const isPreset = trimmed && presetList.includes(trimmed);
+    const category = isPreset ? trimmed : "Custom";
+
+    counts[category] = (counts[category] || 0) + 1;
+  });
+
+  return Object.entries(counts)
+    .map(([name, total]) => ({ name, total }))
+    .sort((a, b) => b.total - a.total);
+}, [orders, activeTab]);
 
   // Hitung quick insights dari currentChartData
   const insights = useMemo(() => {
