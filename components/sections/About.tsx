@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Company from "@/assets-svgr/company-logo.svg";
 import Line from "@/assets-svgr/about-top-line.svg";
 import PatternBlock from "@/assets-svgr/pattern-block3.svg";
@@ -13,6 +12,24 @@ import ModalLogin from "@/components/ui/Modal/ModalLogin";
 
 export default function About() {
    const [activeModal, setActiveModal] = useState<'none' | 'register' | 'login'>('none');
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   useEffect(() => {
+     const checkLogin = () => {
+       const user = localStorage.getItem("user");
+       setIsLoggedIn(!!user);
+     };
+
+     checkLogin(); // check on mount
+
+     window.addEventListener("authChange", checkLogin); // same-tab updates
+     window.addEventListener("storage", checkLogin); // cross-tab updates
+
+     return () => {
+       window.removeEventListener("authChange", checkLogin);
+       window.removeEventListener("storage", checkLogin);
+     };
+   }, []);
 
   return (
     <section
@@ -67,14 +84,16 @@ export default function About() {
                 to stand out.
               </p>
             </div>
-            <div className="flex justify-end mt-5">
-              <button 
-                className="bg-[#3D2FFA] text-[#E6EAF0] py-3 px-6 rounded-md hover:bg-[#2A1FC7] transition-colors duration-300 z-50 text-[20px] sm:text-[18px] font-roboto"
-                onClick={() => setActiveModal('register')}
-              >
-                Join Us
-              </button>
-            </div>
+            {!isLoggedIn && (
+              <div className="flex justify-end mt-5">
+                <button 
+                  className="bg-[#3D2FFA] text-[#E6EAF0] py-3 px-6 rounded-md hover:bg-[#2A1FC7] transition-colors duration-300 z-50 text-[20px] sm:text-[18px] font-roboto"
+                  onClick={() => setActiveModal('register')}
+                >
+                  Join Us
+                </button> 
+              </div>
+            )}
           </FadeIn>
         </div>
       </div>

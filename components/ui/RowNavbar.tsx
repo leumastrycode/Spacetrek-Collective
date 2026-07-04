@@ -1,12 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import WaveUnderline from "@/components/ui/WaveUnderline";
 import ArrowNav from "@/assets-svgr/nav-arrow.svg";
 
 export default function RowNavbar() {
   const [open, setOpen] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLogin = () => {
+      const user = localStorage.getItem("user");
+      setIsLoggedIn(!!user);
+    };
+
+    checkLogin(); // check on mount
+
+    window.addEventListener("authChange", checkLogin); // same-tab updates
+    window.addEventListener("storage", checkLogin); // cross-tab updates
+
+    return () => {
+      window.removeEventListener("authChange", checkLogin);
+      window.removeEventListener("storage", checkLogin);
+    };
+  }, []);
 
   return (
     <section id="navbar">
@@ -35,6 +53,7 @@ export default function RowNavbar() {
           <NavItem href="#vision">Vision</NavItem>
           <NavItem href="#team">Team</NavItem>
           <NavItem href="#product">Product</NavItem>
+          {isLoggedIn && <NavItem href="/Profile">Profile</NavItem>}
         </div>
       </div>
     </section>
