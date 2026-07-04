@@ -12,14 +12,14 @@ export default function Step4({ onNext }: Step4Props) {
   const options = [
     {
       label: "Dark Tech / Monochrome: Predominantly black, white, and metallic silver/gray.",
-      value: "Dark Tech / Monochrome: Predominantly black, white, and metallic silver/gray.",
+      value: "Dark Tech / Monochrome",
     },
 
-    { label: "Neon Vibes: A combination of bright colors such as cyan (light blue), magenta (dark pink), or lime green.", value: "Neon Vibes: A combination of bright colors such as cyan (light blue), magenta (dark pink), or lime green." },
+    { label: "Neon Vibes: A combination of bright colors such as cyan (light blue), magenta (dark pink), or lime green.", value: "Neon Vibes" },
 
-    { label: "Deep Space: A blend of dark blue, purple, and gold/yellow star accents.", value: "Deep Space: A blend of dark blue, purple, and gold/yellow star accents." },
+    { label: "Deep Space: A blend of dark blue, purple, and gold/yellow star accents.", value: "Deep Space" },
 
-    { label: "Eco-Tech: A combination of bright green and modern gray (evoking eco-friendly technology).", value: "Eco-Tech: A combination of bright green and modern gray (evoking eco-friendly technology)." },
+    { label: "Eco-Tech: A combination of bright green and modern gray (evoking eco-friendly technology).", value: "Eco-Tech" },
   ];
 
   const [customText, setCustomText] = useState("");

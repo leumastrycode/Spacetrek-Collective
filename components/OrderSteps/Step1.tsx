@@ -18,7 +18,7 @@ export default function Step1({ onNext }: Step1Props) {
     },
     { label: "Personal Branding", value: "Personal Branding" },
     { label: "Communities / Organizations / Esports Teams", value: "Communities / Organizations / Esports Teams" },
-    { label: "Specific Projects / Products (Apps, Events, Games)", value: "Specific Projects / Products (Apps, Events, Games)" },
+    { label: "Specific Projects / Products (Apps, Events, Games)", value: "Specific Projects / Products" },
   ];
 
   const [customText, setCustomText] = useState("");
