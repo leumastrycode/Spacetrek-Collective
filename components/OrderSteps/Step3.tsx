@@ -11,12 +11,12 @@ export default function Step3({ onNext }: Step3Props) {
   // Array pilihan jawaban agar code lebih rapi
   const options = [
     {
-      label: "Minimalist & Sleek: Clean, simple, elegant, reminiscent of premium tech brands ",
-      value: "Minimalist & Sleek: Clean, simple, elegant, reminiscent of premium tech brands ",
+      label: "Minimalist & Sleek: Clean, simple, elegant, reminiscent of premium tech brands",
+      value: "Minimalist",
     },
-    { label: "Cyberpunk & Edgy: Bold, sharp, energetic, with a futuristic dystopian feel.", value: "Cyberpunk & Edgy: Bold, sharp, energetic, with a futuristic dystopian feel." },
-    { label: "Sci-Fi & Space: Themed around outer space, astronomy, or cosmic elements of the galaxy.", value: "Sci-Fi & Space: Themed around outer space, astronomy, or cosmic elements of the galaxy." },
-    { label: "Synthwave / Retro-Futurism: An ’80s-style futuristic vibe, full of bright colors and nostalgia for old-school computers.", value: "Synthwave / Retro-Futurism: An ’80s-style futuristic vibe, full of bright colors and nostalgia for old-school computers." },
+    { label: "Cyberpunk & Edgy: Bold, sharp, energetic, with a futuristic dystopian feel.", value: "Cyberpunk" },
+    { label: "Sci-Fi & Space: Themed around outer space, astronomy, or cosmic elements of the galaxy.", value: "Sci-Fi & Space" },
+    { label: "Synthwave / Retro-Futurism: An ’80s-style futuristic vibe, full of bright colors and nostalgia for old-school computers.", value: "Synthwave / Retro-Futurism" },
   ];
 
   const [customText, setCustomText] = useState("");

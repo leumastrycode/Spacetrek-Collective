@@ -12,14 +12,14 @@ export default function Step5({ onNext }: Step5Props) {
   const options = [
     {
       label: "Innovative and Visionary.",
-      value: "Innovative and Visionary.",
+      value: "Innovative and Visionary",
     },
 
-    { label: "Fast, Dynamic, and Aggressive.", value: "Fast, Dynamic, and Aggressive." },
+    { label: "Fast, Dynamic, and Aggressive.", value: "Fast, Dynamic, and Aggressive" },
 
-    { label: "Mysterious, Premium, and Luxurious.", value: "Mysterious, Premium, and Luxurious." },
+    { label: "Mysterious, Premium, and Luxurious.", value: "Mysterious, Premium, and Luxurious" },
 
-    { label: "Friendly, Open, and Accessible.", value: "Friendly, Open, and Accessible." },
+    { label: "Friendly, Open, and Accessible.", value: "Friendly, Open, and Accessible" },
   ];
 
   const [customText, setCustomText] = useState("");
