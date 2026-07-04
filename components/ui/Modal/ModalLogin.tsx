@@ -38,6 +38,7 @@ export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: Logi
 
     // Login berhasil
     localStorage.setItem("user", JSON.stringify(data)); // seluruh data user disimpan di browser
+    window.dispatchEvent(new Event("authChange")); // notify other components (e.g. About.tsx) that login state changed
     alert(`Selamat datang, ${data.full_name}!`);
 
     onClose();

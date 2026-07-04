@@ -129,4 +129,3 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
     </div>
   );
 }
-

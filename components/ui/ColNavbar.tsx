@@ -7,6 +7,16 @@ import ArrowNav from "@/assets-svgr/nav-arrow.svg";
 
 export default function ColNavbar() {
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+    const checkLogin = () => {
+      const user = localStorage.getItem("user");
+      setIsLoggedIn(!!user);
+    };
+
+    checkLogin();
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -55,6 +65,7 @@ export default function ColNavbar() {
           <NavItem href="#vision" onClick={() => setOpen(false)}>Vision</NavItem>
           <NavItem href="#team" onClick={() => setOpen(false)}>Team</NavItem>
           <NavItem href="#product" onClick={() => setOpen(false)}>Product</NavItem>
+          {isLoggedIn && <NavItem href="/profile">Profile</NavItem>}
         </div>
       </div>
     </section>
