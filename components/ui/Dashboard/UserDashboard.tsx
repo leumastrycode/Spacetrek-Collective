@@ -64,7 +64,7 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 text-white bg-neutral-900 min-h-screen rounded-[10px]">
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
 
       {/* Bagian Kontrol: Search & Filter */}
@@ -72,13 +72,13 @@ export default function UserDashboard() {
         <input
           type="text"
           placeholder="Cari nama atau email..."
-          className="border p-2 rounded w-full md:w-64 text-black"
+          className="border border-neutral-700 bg-neutral-800 p-2 rounded w-full md:w-80 text-white placeholder-neutral-400 focus:outline-none"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <select
-          className="border p-2 rounded text-black"
+          className="border border-neutral-700 bg-neutral-800 p-2 rounded text-white focus:outline-none"
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
         >
@@ -89,26 +89,26 @@ export default function UserDashboard() {
       </div>
 
       {/* Tabel Informasi */}
-      <div className="overflow-x-auto border rounded">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50 text-black">
+      <div className="overflow-x-auto border border-neutral-800 rounded bg-neutral-800/50">
+        <table className="min-w-full divide-y divide-neutral-800 text-sm">
+          <thead className="bg-neutral-800 text-neutral-300">
             <tr>
-              <th className="p-3 text-left">Nama</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Role</th>
-              <th className="p-3 text-center">Aksi</th>
+              <th className="p-3 text-left font-semibold">Nama</th>
+              <th className="p-3 text-left font-semibold">Email</th>
+              <th className="p-3 text-left font-semibold">Role</th>
+              <th className="p-3 text-center font-semibold">Aksi</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-neutral-800 text-neutral-200">
             {loading ? (
               <tr>
-                <td colSpan={4} className="p-3 text-center text-gray-400">
+                <td colSpan={4} className="p-3 text-center text-neutral-400">
                   Loading...
                 </td>
               </tr>
             ) : filteredUsers.length === 0 ? (
               <tr>
-                <td colSpan={4} className="p-3 text-center text-gray-400">
+                <td colSpan={4} className="p-3 text-center text-neutral-400">
                   Tidak ada user ditemukan
                 </td>
               </tr>
@@ -118,7 +118,15 @@ export default function UserDashboard() {
                   <td className="p-3">{user.full_name}</td>
                   <td className="p-3">{user.email}</td>
                   <td className="p-3">
-                    <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">
+                    <span
+                      className={`px-2 py-1 text-xs rounded text-white ${
+                        user.role === "admin"
+                          ? "bg-indigo-600"
+                          : user.role === "user"
+                          ? "bg-emerald-600"
+                          : "bg-blue-600"
+                      }`}
+                    >
                       {user.role}
                     </span>
                   </td>
