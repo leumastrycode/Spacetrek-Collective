@@ -5,6 +5,7 @@ import DashboardNav from "@/components/ui/Dashboard/Nav";
 import Sidebar from "@/components/ui/Dashboard/SideBar";
 import Dashboard from "@/components/ui/Dashboard/Dashboard";
 import UserDashboard from "@/components/ui/Dashboard/UserDashboard";
+import OrderManagement from "@/components/ui/Dashboard/OrderManagement";
 import { useState } from "react";
 
 export default function AdminPage() {
@@ -27,6 +28,12 @@ export default function AdminPage() {
         {activeTab === "users" && (
           <div className="p-5">
             <UserDashboard />
+          </div>
+        )}
+
+        {activeTab === "orders" && (
+          <div className="p-5">
+            <OrderManagement />
           </div>
         )}
       </main>

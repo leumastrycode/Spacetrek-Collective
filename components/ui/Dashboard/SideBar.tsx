@@ -25,6 +25,16 @@ export default function Sidebar({ activeTab, setActiveTab }: { activeTab: string
           >
             Users
           </button>
+          <button 
+            onClick={() => setActiveTab('orders')}
+            className={`w-full p-5 text-left transition-colors duration-200 hover:text-white ${
+              activeTab === 'orders' 
+                ? 'bg-indigo-600 text-white' 
+                : 'text-gray-300'
+            }`}
+          >
+            Order
+          </button>
         </div>
       </div>
     </div>
