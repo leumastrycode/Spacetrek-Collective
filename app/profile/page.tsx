@@ -1,9 +1,20 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import StarsWrapper from "@/components/ui/StarsWrapper";
 import PatternBlock from "@/assets-svgr/pattern-block-profile2.svg";
 import BackArrow from "@/assets-svgr/nav-arrow.svg";
 import Link from "next/link";
 
 export default function ProfilePage() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.dispatchEvent(new Event("authChange")); // tell Navbar & About the auth state changed
+    router.push("/");
+  };
+
   return (
     <div className="relative min-h-[100dvh] bg-[#0a0a0a] text-white overflow-x-hidden overflow-y-auto scroll-smooth no-scrollbar">
       <StarsWrapper />
@@ -41,7 +52,10 @@ export default function ProfilePage() {
                   className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
                   placeholder="Enter your new username"
                 />
-                <button className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap">
+                <button
+                  type="button"
+                  className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap"
+                >
                   Update Name
                 </button>
               </div>
@@ -57,7 +71,10 @@ export default function ProfilePage() {
                   className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
                   placeholder="Enter your new email"
                 />
-                <button className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap">
+                <button
+                  type="button"
+                  className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap"
+                >
                   Update Email
                 </button>
               </div>
@@ -66,7 +83,10 @@ export default function ProfilePage() {
 
           {/* Logout Button */}
           <div className="mt-10 pt-4 border-t border-transparent">
-            <button className="w-full sm:w-auto bg-red-500 hover:bg-red-600 transition text-white px-5 py-2 rounded text-sm md:text-base font-medium">
+            <button
+              onClick={handleLogout}
+              className="w-full sm:w-auto bg-red-500 hover:bg-red-600 transition text-white px-5 py-2 rounded text-sm md:text-base font-medium"
+            >
               Logout
             </button>
           </div>
