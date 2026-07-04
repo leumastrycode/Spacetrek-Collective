@@ -33,6 +33,7 @@ export default function OrderPage() {
     const user = localStorage.getItem("user");
 
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoggedIn(true);
     }
   }, []);
