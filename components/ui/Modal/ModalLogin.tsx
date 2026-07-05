@@ -18,28 +18,30 @@ export default function ModalLogin({ isOpen, onClose, onSwitchToRegister }: Logi
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { data, error } = await supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    const { data: profile, error: profileError } = await supabase
       .from("users")
       .select("*")
-      .eq("email", email)
+      .eq("id", data.user.id)
       .single();
 
-    // Email tidak ditemukan
-    if (error || !data) {
-        alert("Email tidak ditemukan.");
+    if (profileError) {
+      alert("Gagal mengambil data user.");
       return;
     }
 
-    // Password salah
-    if (data.password !== password) {
-      alert("Password salah.");
-      return;
-    }
-
-    // Login berhasil
-    localStorage.setItem("user", JSON.stringify(data)); // seluruh data user disimpan di browser
-    window.dispatchEvent(new Event("authChange")); // notify other components (e.g. About.tsx) that login state changed
-    alert(`Selamat datang, ${data.full_name}!`);
+    localStorage.setItem("user", JSON.stringify(profile));
+    window.dispatchEvent(new Event("authChange"));
+    alert(`Selamat datang, ${profile.full_name}!`);
 
     onClose();
 
