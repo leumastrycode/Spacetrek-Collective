@@ -20,6 +20,7 @@ export default function OrderManagement() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
 
+  // Ambil data order dari API
   useEffect(() => {
     let isMounted = true;
 
@@ -96,7 +97,7 @@ export default function OrderManagement() {
 
   const filteredOrders = Array.isArray(orders)
     ? orders.filter((order) => {
-        // ID diubah jadi String dulu baru di-search agar tidak eror
+        // ID diubah jadi String dulu baru disearch agar tidak eror
         const orderIdStr = String(order.id);
         const matchesSearch = 
           orderIdStr.includes(searchTerm) || 

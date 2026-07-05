@@ -4,6 +4,7 @@ import Vision from "@/components/sections/Vision";
 import Team from "@/components/sections/Team";
 import Reason from "@/components/sections/Reason";
 import Product from "@/components/sections/Product";
+import { div } from "framer-motion/client";
 
 export const metadata = {
   title: "SpaceTrek Collective",

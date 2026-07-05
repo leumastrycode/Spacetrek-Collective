@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 
@@ -39,6 +40,13 @@ type OrderRow = {
 };
 
 export default function Dashboard() {
+  const router = useRouter();
+  const [adminProfile, setAdminProfile] = useState({
+    name: "Loading...",
+    role: "Loading...",
+    email: "Loading...",
+  });
+
   const [activeTab, setActiveTab] = useState("01_PURPOSE");
 
   const [totalUsers, setTotalUsers] = useState<number | null>(null);
@@ -52,17 +60,46 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
       setLoading(true);
 
+      // const { data: authData, error: authError } = await supabase.auth.getUser();
+
+      // if (authError || !authData?.user) {
+      //   console.error("Gagal ambil data user:", authError?.message);
+      //   router.push("/");
+      //   return;
+      // }
+
+      // const { data: profileData } = await supabase
+      //   .from("users")
+      //   .select("name, role, email")
+      //   .eq("id", authData.user.id)
+      //   .single();
+
+      // if (!profileData || profileData.role !== "admin") {
+      //   alert("Akses ditolak. Anda bukan admin.");
+      //   router.push("/");
+      //   return;
+      // }
+
+      // setAdminProfile({
+      //   name: "Developer Biasa",
+      //   role: "Administrator",
+      //   email: "test@example.com",
+      // });
+
       // 1. Total Users
       const { count: usersCount, error: usersError } = await supabase
         .from("users")
         .select("*", { count: "exact", head: true });
 
-      if (usersError) console.error("Gagal ambil total users:", usersError.message);
+      if (usersError)
+        console.error("Gagal ambil total users:", usersError.message);
 
       // 2. Semua order (dipakai untuk total, finished, dan analytics)
       const { data: ordersData, error: ordersError } = await supabase
         .from("order")
-        .select("id, created_at, purpose, field, style, color, impression, user_id, order_status");
+        .select(
+          "id, created_at, purpose, field, style, color, impression, user_id, order_status",
+        );
 
       if (ordersError) {
         console.error("Gagal ambil data order:", ordersError.message);
@@ -70,12 +107,8 @@ export default function Dashboard() {
         setOrders(ordersData as OrderRow[]);
         setTotalOrders(ordersData.length);
 
-        // TODO: tabel "order" belum punya kolom status/is_finished.
-        // Sementara pakai total order sebagai placeholder.
-        // Ganti logic ini kalau kolom status sudah ditambahkan, contoh:
-        // setFinishedOrders(ordersData.filter(o => o.status === "finished").length);
         const finishedCount = ordersData.filter(
-          (order) => order.order_status?.toLowerCase().trim() === "done"
+          (order) => order.order_status?.toLowerCase().trim() === "done",
         ).length;
         setFinishedOrders(finishedCount);
       }
@@ -87,67 +120,63 @@ export default function Dashboard() {
     fetchDashboardData();
   }, []);
 
-  // Daftar value preset resmi per kategori (diambil dari Step1-Step5)
-// Kalau value order TIDAK ada di daftar ini, berarti itu inputan custom user
-const PRESET_OPTIONS: Record<string, string[]> = {
-  purpose: [
-    "Companies / Startups",
-    "Personal Branding",
-    "Communities / Organizations / Esports Teams",
-    "Specific Projects / Products",
-  ],
-  field: [
-    "Technology / IT / Software Development",
-    "Crypto / Web3 / FinTech",
-    "Gaming / Digital Entertainment",
-    "Fashion / Modern Lifestyle",
-    "Food & Beverage / Culinary",
-  ],
-  style: [
-    "Minimalist",
-    "Cyberpunk",
-    "Sci-Fi & Space",
-    "Synthwave / Retro-Futurism",
-  ],
-  color: [
-    "Dark Tech / Monochrome",
-    "Neon Vibes",
-    "Deep Space",
-    "Eco-Tech",
-  ],
-  impression: [
-    "Innovative and Visionary",
-    "Fast, Dynamic, and Aggressive",
-    "Mysterious, Premium, and Luxurious",
-    "Friendly, Open, and Accessible",
-  ],
-};
+  const PRESET_OPTIONS: Record<string, string[]> = {
+    purpose: [
+      "Companies / Startups",
+      "Personal Branding",
+      "Communities / Organizations / Esports Teams",
+      "Specific Projects / Products",
+    ],
+    field: [
+      "Technology / IT / Software Development",
+      "Crypto / Web3 / FinTech",
+      "Gaming / Digital Entertainment",
+      "Fashion / Modern Lifestyle",
+      "Food & Beverage / Culinary",
+    ],
+    style: [
+      "Minimalist",
+      "Cyberpunk",
+      "Sci-Fi & Space",
+      "Synthwave / Retro-Futurism",
+    ],
+    color: ["Dark Tech / Monochrome", "Neon Vibes", "Deep Space", "Eco-Tech"],
+    impression: [
+      "Innovative and Visionary",
+      "Fast, Dynamic, and Aggressive",
+      "Mysterious, Premium, and Luxurious",
+      "Friendly, Open, and Accessible",
+    ],
+  };
 
   // Hitung chart data untuk tab aktif dari data order yang sudah di-fetch
   const currentChartData = useMemo(() => {
-  const column = tabColumnMap[activeTab]; // "purpose" | "field" | "style" | "color" | "impression"
-  const presetList = PRESET_OPTIONS[column] || [];
-  const counts: Record<string, number> = {};
+    const column = tabColumnMap[activeTab]; // "purpose" | "field" | "style" | "color" | "impression"
+    const presetList = PRESET_OPTIONS[column] || [];
+    const counts: Record<string, number> = {};
 
-  orders.forEach((order) => {
-    const rawValue = order[column];
-    const trimmed = rawValue?.trim();
+    orders.forEach((order) => {
+      const rawValue = order[column];
+      const trimmed = rawValue?.trim();
 
-    // Kosong ATAU tidak ada di daftar preset resmi -> masuk kategori "Custom"
-    const isPreset = trimmed && presetList.includes(trimmed);
-    const category = isPreset ? trimmed : "Custom";
+      // Kosong ATAU tidak ada di daftar preset resmi -> masuk kategori "Custom"
+      const isPreset = trimmed && presetList.includes(trimmed);
+      const category = isPreset ? trimmed : "Custom";
 
-    counts[category] = (counts[category] || 0) + 1;
-  });
+      counts[category] = (counts[category] || 0) + 1;
+    });
 
-  return Object.entries(counts)
-    .map(([name, total]) => ({ name, total }))
-    .sort((a, b) => b.total - a.total);
-}, [orders, activeTab]);
+    return Object.entries(counts)
+      .map(([name, total]) => ({ name, total }))
+      .sort((a, b) => b.total - a.total);
+  }, [orders, activeTab]);
 
   // Hitung quick insights dari currentChartData
   const insights = useMemo(() => {
-    const sumTotal = currentChartData.reduce((sum, item) => sum + item.total, 0);
+    const sumTotal = currentChartData.reduce(
+      (sum, item) => sum + item.total,
+      0,
+    );
     const topChoice = currentChartData[0];
     const topChoicePercentage =
       topChoice && sumTotal > 0
@@ -178,9 +207,12 @@ const PRESET_OPTIONS: Record<string, string[]> = {
             />
           </div>
 
-          <div className="flex flex-col">
-            <h2 className="text-xl font-bold">Admin Name</h2>
-            <p className="text-gray-400">Position</p>
+          <div className="flex flex-col gap-[30px]">
+            <div className="flex flex-col">
+              <h2 className="text-xl font-bold">{adminProfile.name}</h2>
+              <p className="text-gray-400">{adminProfile.role}</p>
+            </div>
+            <p className="text-gray-400">{adminProfile.email}</p>
           </div>
         </div>
       </div>
