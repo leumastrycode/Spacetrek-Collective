@@ -17,19 +17,34 @@ export default function ModalRegister({ isOpen, onClose, onSwitchToLogin }: Regi
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { data, error } = await supabase
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    if (authError) {
+      alert(authError.message);
+      return;
+    }
+
+    if (!authData.user) {
+      alert("Gagal mendapatkan data user.");
+      return;
+    }
+
+    const { error } = await supabase
       .from("users")
       .insert([
-        {
-          full_name: fullName,
-          email: email,
-          password: password,
-        },
-      ]);
+      {
+        id: authData.user.id,
+        full_name: fullName,
+        email: email,
+      },
+    ]);
 
     if (error) {
       alert(error.message);
-      return;
+      return ;
     }
 
     alert("Register berhasil! Silakan login.");
