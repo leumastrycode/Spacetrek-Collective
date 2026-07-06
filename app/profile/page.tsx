@@ -5,14 +5,66 @@ import StarsWrapper from "@/components/ui/StarsWrapper";
 import PatternBlock from "@/assets-svgr/pattern-block-profile2.svg";
 import BackArrow from "@/assets-svgr/nav-arrow.svg";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function ProfilePage() {
   const router = useRouter();
+
+  const [user, setUser] = useState({
+    full_name: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+
+      setUser(parsedUser);
+      setNewName(parsedUser.full_name);
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     window.dispatchEvent(new Event("authChange")); // tell Navbar & About the auth state changed
     router.push("/");
+  };
+
+  const [newName, setNewName] = useState("");
+
+  const handleUpdateName = async () => {
+    if (!newName.trim()) {
+      alert("Nama tidak boleh kosong.");
+      return;
+    }
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+    const { error } = await supabase
+      .from("users")
+      .update({
+        full_name: newName,
+      })
+      .eq("id", storedUser.id);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    const updatedUser = {
+      ...storedUser,
+      full_name: newName,
+    };
+
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+
+    setUser(updatedUser);
+    setNewName(updatedUser.full_name);
+
+    alert("Nama berhasil diubah.");
   };
 
   return (
@@ -49,11 +101,13 @@ export default function ProfilePage() {
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
+                  value={newName}
+                  onChange={(e)=>setNewName(e.target.value)}
                   className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
-                  placeholder="Enter your new username"
                 />
                 <button
                   type="button"
+                  onClick={handleUpdateName}
                   className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap"
                 >
                   Update Name
@@ -68,6 +122,7 @@ export default function ProfilePage() {
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
+                  value={user.email}
                   className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
                   placeholder="Enter your new email"
                 />
