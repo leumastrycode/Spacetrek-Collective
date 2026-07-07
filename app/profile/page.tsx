@@ -123,15 +123,10 @@ export default function ProfilePage() {
                 <input
                   type="email"
                   value={user.email}
+                  readOnly
                   className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
                   placeholder="Enter your new email"
                 />
-                <button
-                  type="button"
-                  className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap"
-                >
-                  Update Email
-                </button>
               </div>
             </div>
           </form>
