@@ -6,6 +6,7 @@ import Sidebar from "@/components/ui/Dashboard/SideBar";
 import Dashboard from "@/components/ui/Dashboard/Dashboard";
 import UserDashboard from "@/components/ui/Dashboard/UserDashboard";
 import OrderManagement from "@/components/ui/Dashboard/OrderManagement";
+import ProfileAdmin from "@/components/ui/Dashboard/ProfileAdmin";
 import { useState } from "react";
 
 export default function AdminPage() {
@@ -54,6 +55,12 @@ export default function AdminPage() {
         {activeTab === "orders" && (
           <div className="p-5">
             <OrderManagement />
+          </div>
+        )}
+        
+        {activeTab === "profile" && (
+          <div className="p-5">
+            <ProfileAdmin />
           </div>
         )}
       </main>

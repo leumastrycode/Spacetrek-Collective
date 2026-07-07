@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-export default function ProfilePage() {
+export default function ProfileAdmin() {
   const router = useRouter();
 
   const [user, setUser] = useState(() => {
@@ -85,26 +85,64 @@ export default function ProfilePage() {
     alert("Nama berhasil diubah.");
   };
 
+  const [updatingEmail, setUpdatingEmail] = useState(false);
+
+  const handleUpdateEmail = async () => {
+    console.log("newEmail saat submit:", newEmail);
+    console.log("user.email saat ini:", user.email);
+
+    if (!newEmail.trim()) {
+      alert("Email tidak boleh kosong.");
+      return;
+    }
+
+    setUpdatingEmail(true);
+
+    const { error: authError } = await supabase.auth.updateUser({
+      email: newEmail,
+    });
+
+    if (authError) {
+      console.error("message:", authError.message);
+      console.error("status:", authError.status);
+      console.error("code:", authError.code);
+      alert(authError.message);
+      setUpdatingEmail(false);
+      return;
+    }
+
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const { error: dbError } = await supabase
+      .from("users")
+      .update({ email: newEmail })
+      .eq("id", storedUser.id || user.id);
+
+    if (dbError) {
+      alert(
+        "Auth terupdate, tapi gagal update tabel users: " + dbError.message,
+      );
+      setUpdatingEmail(false);
+      return;
+    }
+
+    const updatedUser = { ...storedUser, email: newEmail };
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+
+    setUpdatingEmail(false);
+    alert("Email berhasil diubah.");
+  };
+
   return (
     <div className="relative min-h-[100dvh] bg-[#0a0a0a] text-white overflow-x-hidden overflow-y-auto scroll-smooth no-scrollbar">
       <StarsWrapper />
 
       <div className="flex flex-col justify-center items-center px-4 py-10 md:py-20">
-        <Link
-          className="flex flex-row items-center justify-start gap-2 cursor-pointer w-full max-w-[800px] mb-5"
-          href="/"
-        >
-          <BackArrow width={30} height={30} className="rotate-180 z-50" />
-          <h2 className="text-white text-1xl md:text-2xl font-normal font-['inter'] leading-none hover:text-indigo-600">
-            Back
-          </h2>
-        </Link>
-
         {/* Card */}
         <div className="glass-effect-no-hover p-5 md:p-10 rounded-xl max-w-[800px] w-full relative">
           <PatternBlock className="absolute bottom-0 right-0 pointer-events-none" />
           <h1 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">
-            Profile
+            Profile Admin
           </h1>
           <p className="text-sm md:text-base text-gray-300 mb-6">
             This is your profile page. You can update your information here.
@@ -147,9 +185,11 @@ export default function ProfilePage() {
                 />
                 <button
                   type="button"
+                  onClick={handleUpdateEmail}
+                  disabled={updatingEmail}
                   className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap"
                 >
-                  Update Email
+                  {updatingEmail ? "Updating..." : "Update Email"}
                 </button>
               </div>
             </div>

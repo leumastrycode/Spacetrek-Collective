@@ -1,9 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-
 import Image from "next/image";
 import UserLogo from "@/assets-svgr/user-interface.svg";
 import OrderLogo from "@/assets-svgr/clipboard.svg";
@@ -45,6 +44,7 @@ export default function Dashboard() {
     name: "Loading...",
     role: "Loading...",
     email: "Loading...",
+    photo: null as string | null,
   });
 
   const [activeTab, setActiveTab] = useState("01_PURPOSE");
@@ -54,37 +54,93 @@ export default function Dashboard() {
   const [finishedOrders, setFinishedOrders] = useState<number | null>(null);
   const [orders, setOrders] = useState<OrderRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !userId) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("File harus berupa gambar.");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Ukuran gambar maksimal 2MB.");
+      return;
+    }
+
+    setUploadingPhoto(true);
+
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${userId}-${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("admin-photo")
+      .upload(filePath, file, { upsert: true });
+
+    if (uploadError) {
+      alert("Gagal upload foto: " + uploadError.message);
+      setUploadingPhoto(false);
+      return;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("admin-photo")
+      .getPublicUrl(filePath);
+    const publicUrl = urlData.publicUrl;
+
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ photo: publicUrl })
+      .eq("id", userId);
+
+    if (updateError) {
+      alert("Gagal update database: " + updateError.message);
+      setUploadingPhoto(false);
+      return;
+    }
+
+    setAdminProfile((prev) => ({ ...prev, photo: publicUrl }));
+    setUploadingPhoto(false);
+  };
 
   // Ambil semua data sekali di awal (bukan tiap ganti tab, biar hemat request)
   useEffect(() => {
     const fetchDashboardData = async () => {
       setLoading(true);
 
-      // const { data: authData, error: authError } = await supabase.auth.getUser();
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
 
-      // if (authError || !authData?.user) {
-      //   console.error("Gagal ambil data user:", authError?.message);
-      //   router.push("/");
-      //   return;
-      // }
+      if (authError || !authData?.user) {
+        console.error("Gagal ambil data user:", authError?.message);
+        router.push("/");
+        return;
+      }
 
-      // const { data: profileData } = await supabase
-      //   .from("users")
-      //   .select("name, role, email")
-      //   .eq("id", authData.user.id)
-      //   .single();
+      setUserId(authData.user.id);
 
-      // if (!profileData || profileData.role !== "admin") {
-      //   alert("Akses ditolak. Anda bukan admin.");
-      //   router.push("/");
-      //   return;
-      // }
+      const { data: profileData } = await supabase
+        .from("users")
+        .select("full_name, role, email, photo")
+        .eq("id", authData.user.id)
+        .single();
 
-      // setAdminProfile({
-      //   name: "Developer Biasa",
-      //   role: "Administrator",
-      //   email: "test@example.com",
-      // });
+      if (!profileData || profileData.role !== "admin") {
+        alert("Akses ditolak. Anda bukan admin.");
+        router.push("/");
+        return;
+      }
+
+      setAdminProfile({
+        name: profileData.full_name,
+        role: profileData.role,
+        email: profileData.email,
+        photo: profileData.photo,
+      });
 
       // 1. Total Users
       const { count: usersCount, error: usersError } = await supabase
@@ -197,19 +253,32 @@ export default function Dashboard() {
       {/* Admin Profile */}
       <div className="glass-effect-no-hover w-full p-8 rounded-lg mb-5">
         <div className="flex flex-row gap-5">
-          <div className="w-[120px] h-[120px] rounded-full bg-gray-500 mr-4">
+          <div
+            className="w-[120px] h-[120px] rounded-full bg-gray-500 mr-4 relative group cursor-pointer"
+            onClick={() => fileInputRef.current?.click()}
+          >
             <Image
-              src="/path/to/admin-photo.jpg"
+              src={adminProfile.photo || "/default-avatar.png"}
               alt="Admin Profile"
               width={120}
               height={120}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover w-full h-full"
+            />
+            <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-xs text-white">
+              {uploadingPhoto ? "Uploading..." : "Ganti"}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handlePhotoChange}
+              className="hidden"
             />
           </div>
 
           <div className="flex flex-col gap-[30px]">
             <div className="flex flex-col">
-              <h2 className="text-xl font-bold">{adminProfile.name}</h2>
+              <h2 className="text-xl font-bold">Hi, {adminProfile.name}</h2>
               <p className="text-gray-400">{adminProfile.role}</p>
             </div>
             <p className="text-gray-400">{adminProfile.email}</p>
