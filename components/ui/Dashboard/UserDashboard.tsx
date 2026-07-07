@@ -44,24 +44,30 @@ export default function UserDashboard() {
 
   // 3. Logic Fitur Delete
   const handleDelete = async (userId: string) => {
-    if (confirm("Apakah kamu yakin ingin menghapus user ini?")) {
-      try {
-        const res = await fetch("/api/users", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: userId }),
-        });
+  if (confirm("Apakah kamu yakin ingin menghapus user ini?")) {
+    try {
+      const res = await fetch("/api/users", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: userId }),
+      });
 
-        if (res.ok) {
-          setUsers((prev) => prev.filter((user) => user.id !== userId));
-        } else {
-          alert("Gagal menghapus user");
-        }
-      } catch (error) {
-        console.error("Error saat menghapus:", error);
+      const result = await res.json();
+
+      if (res.ok) {
+        setUsers((prev) => prev.filter((user) => user.id !== userId));
+      } else if (result?.error?.code === "23503") {
+        // foreign key violation
+        alert("User ini tidak bisa dihapus karena masih memiliki order aktif.");
+      } else {
+        alert(result?.error?.message || "Gagal menghapus user");
       }
+    } catch (error) {
+      console.error("Error saat menghapus:", error);
+      alert("Terjadi kesalahan saat menghapus user.");
     }
-  };
+  }
+};
 
   return (
     <div className="p-6 text-white bg-neutral-900 min-h-screen rounded-[10px]">

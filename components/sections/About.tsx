@@ -9,25 +9,29 @@ import Star from "@/assets-svgr/star 29.svg";
 import StarLine from "@/assets-svgr/star-27.svg";
 import ModalRegister from "@/components/ui/Modal/ModalRegister"; 
 import ModalLogin from "@/components/ui/Modal/ModalLogin"; 
+import { supabase } from '@/lib/supabase';
 
 export default function About() {
    const [activeModal, setActiveModal] = useState<'none' | 'register' | 'login'>('none');
    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-   useEffect(() => {
-     const checkLogin = () => {
-       const user = localStorage.getItem("user");
-       setIsLoggedIn(!!user);
+    useEffect(() => {
+     const checkLogin = async () => {
+       const { data: authData } = await supabase.auth.getUser();
+       setIsLoggedIn(!!authData?.user);
      };
 
      checkLogin(); // check on mount
 
      window.addEventListener("authChange", checkLogin); // same-tab updates
-     window.addEventListener("storage", checkLogin); // cross-tab updates
+
+     const { data: listener } = supabase.auth.onAuthStateChange(() => {
+       checkLogin();
+     });
 
      return () => {
        window.removeEventListener("authChange", checkLogin);
-       window.removeEventListener("storage", checkLogin);
+       listener.subscription.unsubscribe();
      };
    }, []);
 

@@ -3,13 +3,11 @@
 import { useRouter } from "next/navigation";
 import StarsWrapper from "@/components/ui/StarsWrapper";
 import PatternBlock from "@/assets-svgr/pattern-block-profile2.svg";
-import BackArrow from "@/assets-svgr/nav-arrow.svg";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-export default function ProfilePage() {
-  const router = useRouter();
+export default function ProfileAdmin() {
+ const router = useRouter();
 
   const [userId, setUserId] = useState<string | null>(null);
   const [newName, setNewName] = useState("");
@@ -76,21 +74,11 @@ export default function ProfilePage() {
       <StarsWrapper />
 
       <div className="flex flex-col justify-center items-center px-4 py-10 md:py-20">
-        <Link
-          className="flex flex-row items-center justify-start gap-2 cursor-pointer w-full max-w-[800px] mb-5"
-          href="/"
-        >
-          <BackArrow width={30} height={30} className="rotate-180 z-50" />
-          <h2 className="text-white text-1xl md:text-2xl font-normal font-['inter'] leading-none hover:text-indigo-600">
-            Back
-          </h2>
-        </Link>
-
         {/* Card */}
         <div className="glass-effect-no-hover p-5 md:p-10 rounded-xl max-w-[800px] w-full relative">
           <PatternBlock className="absolute bottom-0 right-0 pointer-events-none" />
           <h1 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">
-            Profile
+            Profile Admin
           </h1>
           <p className="text-sm md:text-base text-gray-300 mb-6">
             This is your profile page. You can update your information here.
@@ -128,7 +116,7 @@ export default function ProfilePage() {
                   type="email"
                   value={userEmail}
                   readOnly
-                  className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600"
+                  className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
                   placeholder="Enter your new email"
                 />
               </div>

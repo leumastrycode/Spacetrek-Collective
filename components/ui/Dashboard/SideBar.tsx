@@ -62,6 +62,14 @@ export default function Sidebar({
             >
               Order
             </button>
+            <button 
+              onClick={() => { setActiveTab('profile'); onClose(); }}
+              className={`w-full p-5 text-left transition-colors duration-200 hover:text-white ${
+                activeTab === 'profile' ? 'bg-indigo-600 text-white' : 'text-gray-300'
+              }`}
+            >
+              Your Profile
+            </button>
           </div>
         </div>
       </div>

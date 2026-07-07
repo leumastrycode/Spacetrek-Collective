@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-
 import Image from "next/image";
 import UserLogo from "@/assets-svgr/user-interface.svg";
 import OrderLogo from "@/assets-svgr/clipboard.svg";
@@ -39,6 +39,14 @@ type OrderRow = {
 };
 
 export default function Dashboard() {
+  const router = useRouter();
+  const [adminProfile, setAdminProfile] = useState({
+    name: "Loading...",
+    role: "Loading...",
+    email: "Loading...",
+    photo: null as string | null,
+  });
+
   const [activeTab, setActiveTab] = useState("01_PURPOSE");
 
   const [totalUsers, setTotalUsers] = useState<number | null>(null);
@@ -46,23 +54,108 @@ export default function Dashboard() {
   const [finishedOrders, setFinishedOrders] = useState<number | null>(null);
   const [orders, setOrders] = useState<OrderRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !userId) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("File harus berupa gambar.");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Ukuran gambar maksimal 2MB.");
+      return;
+    }
+
+    setUploadingPhoto(true);
+
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${userId}-${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("admin-photo")
+      .upload(filePath, file, { upsert: true });
+
+    if (uploadError) {
+      alert("Gagal upload foto: " + uploadError.message);
+      setUploadingPhoto(false);
+      return;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("admin-photo")
+      .getPublicUrl(filePath);
+    const publicUrl = urlData.publicUrl;
+
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ photo: publicUrl })
+      .eq("id", userId);
+
+    if (updateError) {
+      alert("Gagal update database: " + updateError.message);
+      setUploadingPhoto(false);
+      return;
+    }
+
+    setAdminProfile((prev) => ({ ...prev, photo: publicUrl }));
+    setUploadingPhoto(false);
+  };
 
   // Ambil semua data sekali di awal (bukan tiap ganti tab, biar hemat request)
   useEffect(() => {
     const fetchDashboardData = async () => {
       setLoading(true);
 
-      // 1. Total Users
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
+
+      if (authError || !authData?.user) {
+        console.error("Gagal ambil data user:", authError?.message);
+        router.push("/");
+        return;
+      }
+
+      setUserId(authData.user.id);
+
+      const { data: profileData } = await supabase
+        .from("users")
+        .select("full_name, role, email, photo")
+        .eq("id", authData.user.id)
+        .single();
+
+      if (!profileData || profileData.role !== "admin") {
+        alert("Akses ditolak. Anda bukan admin.");
+        router.push("/");
+        return;
+      }
+
+      setAdminProfile({
+        name: profileData.full_name,
+        role: profileData.role,
+        email: profileData.email,
+        photo: profileData.photo,
+      });
+
+      // Total Users
       const { count: usersCount, error: usersError } = await supabase
         .from("users")
         .select("*", { count: "exact", head: true });
 
-      if (usersError) console.error("Gagal ambil total users:", usersError.message);
+      if (usersError)
+        console.error("Gagal ambil total users:", usersError.message);
 
-      // 2. Semua order (dipakai untuk total, finished, dan analytics)
+      // Semua order (dipakai untuk total, finished, dan analytics)
       const { data: ordersData, error: ordersError } = await supabase
         .from("order")
-        .select("id, created_at, purpose, field, style, color, impression, user_id, order_status");
+        .select(
+          "id, created_at, purpose, field, style, color, impression, user_id, order_status",
+        );
 
       if (ordersError) {
         console.error("Gagal ambil data order:", ordersError.message);
@@ -70,12 +163,8 @@ export default function Dashboard() {
         setOrders(ordersData as OrderRow[]);
         setTotalOrders(ordersData.length);
 
-        // TODO: tabel "order" belum punya kolom status/is_finished.
-        // Sementara pakai total order sebagai placeholder.
-        // Ganti logic ini kalau kolom status sudah ditambahkan, contoh:
-        // setFinishedOrders(ordersData.filter(o => o.status === "finished").length);
         const finishedCount = ordersData.filter(
-          (order) => order.order_status?.toLowerCase().trim() === "done"
+          (order) => order.order_status?.toLowerCase().trim() === "done",
         ).length;
         setFinishedOrders(finishedCount);
       }
@@ -87,67 +176,63 @@ export default function Dashboard() {
     fetchDashboardData();
   }, []);
 
-  // Daftar value preset resmi per kategori (diambil dari Step1-Step5)
-// Kalau value order TIDAK ada di daftar ini, berarti itu inputan custom user
-const PRESET_OPTIONS: Record<string, string[]> = {
-  purpose: [
-    "Companies / Startups",
-    "Personal Branding",
-    "Communities / Organizations / Esports Teams",
-    "Specific Projects / Products",
-  ],
-  field: [
-    "Technology / IT / Software Development",
-    "Crypto / Web3 / FinTech",
-    "Gaming / Digital Entertainment",
-    "Fashion / Modern Lifestyle",
-    "Food & Beverage / Culinary",
-  ],
-  style: [
-    "Minimalist",
-    "Cyberpunk",
-    "Sci-Fi & Space",
-    "Synthwave / Retro-Futurism",
-  ],
-  color: [
-    "Dark Tech / Monochrome",
-    "Neon Vibes",
-    "Deep Space",
-    "Eco-Tech",
-  ],
-  impression: [
-    "Innovative and Visionary",
-    "Fast, Dynamic, and Aggressive",
-    "Mysterious, Premium, and Luxurious",
-    "Friendly, Open, and Accessible",
-  ],
-};
+  const PRESET_OPTIONS: Record<string, string[]> = {
+    purpose: [
+      "Companies / Startups",
+      "Personal Branding",
+      "Communities / Organizations / Esports Teams",
+      "Specific Projects / Products",
+    ],
+    field: [
+      "Technology / IT / Software Development",
+      "Crypto / Web3 / FinTech",
+      "Gaming / Digital Entertainment",
+      "Fashion / Modern Lifestyle",
+      "Food & Beverage / Culinary",
+    ],
+    style: [
+      "Minimalist",
+      "Cyberpunk",
+      "Sci-Fi & Space",
+      "Synthwave / Retro-Futurism",
+    ],
+    color: ["Dark Tech / Monochrome", "Neon Vibes", "Deep Space", "Eco-Tech"],
+    impression: [
+      "Innovative and Visionary",
+      "Fast, Dynamic, and Aggressive",
+      "Mysterious, Premium, and Luxurious",
+      "Friendly, Open, and Accessible",
+    ],
+  };
 
   // Hitung chart data untuk tab aktif dari data order yang sudah di-fetch
   const currentChartData = useMemo(() => {
-  const column = tabColumnMap[activeTab]; // "purpose" | "field" | "style" | "color" | "impression"
-  const presetList = PRESET_OPTIONS[column] || [];
-  const counts: Record<string, number> = {};
+    const column = tabColumnMap[activeTab]; // "purpose" | "field" | "style" | "color" | "impression"
+    const presetList = PRESET_OPTIONS[column] || [];
+    const counts: Record<string, number> = {};
 
-  orders.forEach((order) => {
-    const rawValue = order[column];
-    const trimmed = rawValue?.trim();
+    orders.forEach((order) => {
+      const rawValue = order[column];
+      const trimmed = rawValue?.trim();
 
-    // Kosong ATAU tidak ada di daftar preset resmi -> masuk kategori "Custom"
-    const isPreset = trimmed && presetList.includes(trimmed);
-    const category = isPreset ? trimmed : "Custom";
+      // Kosong ATAU tidak ada di daftar preset resmi -> masuk kategori "Custom"
+      const isPreset = trimmed && presetList.includes(trimmed);
+      const category = isPreset ? trimmed : "Custom";
 
-    counts[category] = (counts[category] || 0) + 1;
-  });
+      counts[category] = (counts[category] || 0) + 1;
+    });
 
-  return Object.entries(counts)
-    .map(([name, total]) => ({ name, total }))
-    .sort((a, b) => b.total - a.total);
-}, [orders, activeTab]);
+    return Object.entries(counts)
+      .map(([name, total]) => ({ name, total }))
+      .sort((a, b) => b.total - a.total);
+  }, [orders, activeTab]);
 
   // Hitung quick insights dari currentChartData
   const insights = useMemo(() => {
-    const sumTotal = currentChartData.reduce((sum, item) => sum + item.total, 0);
+    const sumTotal = currentChartData.reduce(
+      (sum, item) => sum + item.total,
+      0,
+    );
     const topChoice = currentChartData[0];
     const topChoicePercentage =
       topChoice && sumTotal > 0
@@ -168,19 +253,35 @@ const PRESET_OPTIONS: Record<string, string[]> = {
       {/* Admin Profile */}
       <div className="glass-effect-no-hover w-full p-8 rounded-lg mb-5">
         <div className="flex flex-row gap-5">
-          <div className="w-[120px] h-[120px] rounded-full bg-gray-500 mr-4">
+          <div
+            className="w-[120px] h-[120px] rounded-full bg-gray-500 mr-4 relative group cursor-pointer"
+            onClick={() => fileInputRef.current?.click()}
+          >
             <Image
-              src="/path/to/admin-photo.jpg"
+              src={adminProfile.photo || "/default-avatar.png"}
               alt="Admin Profile"
               width={120}
               height={120}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover w-full h-full"
+            />
+            <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-xs text-white">
+              {uploadingPhoto ? "Uploading..." : "Ganti"}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handlePhotoChange}
+              className="hidden"
             />
           </div>
 
-          <div className="flex flex-col">
-            <h2 className="text-xl font-bold">Admin Name</h2>
-            <p className="text-gray-400">Position</p>
+          <div className="flex flex-col gap-[30px]">
+            <div className="flex flex-col">
+              <h2 className="text-xl font-bold">Hi, {adminProfile.name}</h2>
+              <p className="text-gray-400">Administrator</p>
+            </div>
+            <p className="text-gray-400">{adminProfile.email}</p>
           </div>
         </div>
       </div>
