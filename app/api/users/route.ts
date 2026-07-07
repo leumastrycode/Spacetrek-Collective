@@ -16,7 +16,9 @@ export async function DELETE(req: Request) {
     .delete()
     .eq("id", id);
 
-  if (error) return Response.json({ error }, { status: 500 });
-
+  if (error) {
+    console.error("Delete error:", error);
+    return Response.json({ error }, { status: 500 });
+  }
   return Response.json({ success: true });
 }

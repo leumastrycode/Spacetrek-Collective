@@ -4,25 +4,46 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import WaveUnderline from "@/components/ui/WaveUnderline";
 import ArrowNav from "@/assets-svgr/nav-arrow.svg";
+import { supabase } from "@/lib/supabase";
 
 export default function RowNavbar() {
   const [open, setOpen] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState<"user" | "admin" | null>(null);
 
   useEffect(() => {
-    const checkLogin = () => {
-      const user = localStorage.getItem("user");
-      setIsLoggedIn(!!user);
+    const checkLogin = async () => {
+      const { data: authData } = await supabase.auth.getUser();
+
+      if (!authData?.user) {
+        setRole(null);
+        return;
+      }
+
+      const { data: profileData, error } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", authData.user.id)
+        .single();
+
+      if (error || !profileData) {
+        setRole(null);
+        return;
+      }
+
+      setRole(profileData.role ?? "user");
     };
 
     checkLogin(); // check on mount
 
     window.addEventListener("authChange", checkLogin); // same-tab updates
-    window.addEventListener("storage", checkLogin); // cross-tab updates
+
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      checkLogin();
+    });
 
     return () => {
       window.removeEventListener("authChange", checkLogin);
-      window.removeEventListener("storage", checkLogin);
+      listener.subscription.unsubscribe();
     };
   }, []);
 
@@ -53,7 +74,8 @@ export default function RowNavbar() {
           <NavItem href="#vision">Vision</NavItem>
           <NavItem href="#team">Team</NavItem>
           <NavItem href="#product">Product</NavItem>
-          {isLoggedIn && <NavItem href="/profile">Profile</NavItem>}
+          {role === "admin" && <NavItem href="/Admin">Dashboard</NavItem>}
+          {role === "user" && <NavItem href="/profile">Profile</NavItem>}
         </div>
       </div>
     </section>

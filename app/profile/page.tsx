@@ -11,19 +11,16 @@ import { supabase } from "@/lib/supabase";
 export default function ProfilePage() {
   const router = useRouter();
 
-  const [user, setUser] = useState(() => {
-    if (typeof window === "undefined") return { full_name: "", email: "" };
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : { full_name: "", email: "" };
-  });
-
-  const [newName, setNewName] = useState(user.full_name ?? "");
-  const [newEmail, setNewEmail] = useState(user.email ?? "");
+  const [userId, setUserId] = useState<string | null>(null);
+  const [newName, setNewName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
       const { data: authData } = await supabase.auth.getUser();
       if (!authData?.user) return;
+
+      setUserId(authData.user.id);
 
       const { data: profileData, error } = await supabase
         .from("users")
@@ -36,20 +33,16 @@ export default function ProfilePage() {
         return;
       }
 
-      setUser({
-        full_name: profileData.full_name ?? "",
-        email: profileData.email ?? "",
-      });
       setNewName(profileData.full_name ?? "");
-      setNewEmail(profileData.email ?? "");
+      setUserEmail(profileData.email ?? "");
     };
 
     fetchUser();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.dispatchEvent(new Event("authChange")); // tell Navbar & About the auth state changed
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.dispatchEvent(new Event("authChange"));
     router.push("/");
   };
 
@@ -58,29 +51,22 @@ export default function ProfilePage() {
       alert("Nama tidak boleh kosong.");
       return;
     }
-    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    if (!userId) {
+      alert("User belum termuat.");
+      return;
+    }
 
     const { error } = await supabase
       .from("users")
-      .update({
-        full_name: newName,
-      })
-      .eq("id", storedUser.id);
+      .update({ full_name: newName })
+      .eq("id", userId);
 
     if (error) {
       alert(error.message);
       return;
     }
 
-    const updatedUser = {
-      ...storedUser,
-      full_name: newName,
-    };
-
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-
-    setUser(updatedUser);
-    setNewName(updatedUser.full_name);
+    setNewName(newName);
 
     alert("Nama berhasil diubah.");
   };
@@ -140,17 +126,11 @@ export default function ProfilePage() {
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
-                  value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
-                  className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm md:text-base"
+                  value={userEmail}
+                  readOnly
+                  className="w-full bg-transparent text-white placeholder:text-gray-500 p-2.5 rounded border border-gray-600"
                   placeholder="Enter your new email"
                 />
-                <button
-                  type="button"
-                  className="bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2.5 rounded text-sm md:text-base whitespace-nowrap"
-                >
-                  Update Email
-                </button>
               </div>
             </div>
           </form>

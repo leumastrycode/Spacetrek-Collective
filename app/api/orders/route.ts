@@ -4,8 +4,13 @@ import supabase from "@/lib/db";
 export async function GET() {
   const { data, error } = await supabase
     .from("order")
-    .select("*")
-    .order("created_at", { ascending: false }); // orderan terbaru muncul paling atas
+    .select(`
+      *,
+      users:user_id (
+        email
+      )
+    `)
+    .order("created_at", { ascending: false });
 
   if (error) return Response.json({ error }, { status: 500 });
 

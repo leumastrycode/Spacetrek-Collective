@@ -142,7 +142,7 @@ export default function Dashboard() {
         photo: profileData.photo,
       });
 
-      // 1. Total Users
+      // Total Users
       const { count: usersCount, error: usersError } = await supabase
         .from("users")
         .select("*", { count: "exact", head: true });
@@ -150,7 +150,7 @@ export default function Dashboard() {
       if (usersError)
         console.error("Gagal ambil total users:", usersError.message);
 
-      // 2. Semua order (dipakai untuk total, finished, dan analytics)
+      // Semua order (dipakai untuk total, finished, dan analytics)
       const { data: ordersData, error: ordersError } = await supabase
         .from("order")
         .select(
@@ -279,7 +279,7 @@ export default function Dashboard() {
           <div className="flex flex-col gap-[30px]">
             <div className="flex flex-col">
               <h2 className="text-xl font-bold">Hi, {adminProfile.name}</h2>
-              <p className="text-gray-400">{adminProfile.role}</p>
+              <p className="text-gray-400">Administrator</p>
             </div>
             <p className="text-gray-400">{adminProfile.email}</p>
           </div>

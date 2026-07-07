@@ -10,7 +10,7 @@ interface Order {
   style: string | null;
   color: string | null;
   impression: string | null;
-  customer_name: string;
+  users: { email: string } | null;
   order_status?: "in progress" | "done"; 
 }
 
@@ -148,7 +148,7 @@ export default function OrderManagement() {
               <th className="p-3 text-left font-semibold">Tujuan / Bidang</th>
               <th className="p-3 text-left font-semibold">Style / Warna</th>
               <th className="p-3 text-left font-semibold">Kesan</th>
-              <th className="p-3 text-left font-semibold">User Name</th>
+              <th className="p-3 text-left font-semibold">User Email</th>
               <th className="p-3 text-left font-semibold">Status</th>
               <th className="p-3 text-center font-semibold">Aksi</th>
             </tr>
@@ -175,7 +175,7 @@ export default function OrderManagement() {
                       <div className="text-xs text-neutral-400">{order.color || "-"}</div>
                     </td>
                     <td className="p-3 truncate max-w-xs">{order.impression || "-"}</td>
-                    <td className="p-3 font-mono text-xs text-neutral-400">{order.customer_name || "-"}</td>
+                    <td className="p-3 font-mono text-xs text-neutral-400">{order.users?.email || "-"}</td>
                     <td className="p-3">
                       <div className="flex items-center gap-2">
                         <span

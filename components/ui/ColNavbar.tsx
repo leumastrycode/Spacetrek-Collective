@@ -4,19 +4,48 @@ import { useEffect,useState } from "react";
 import Link from "next/link";
 import WaveUnderline from "@/components/ui/WaveUnderline";
 import ArrowNav from "@/assets-svgr/nav-arrow.svg";
+import { supabase } from "@/lib/supabase";
 
 export default function ColNavbar() {
   const [open, setOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [role, setRole] = useState<"user" | "admin" | null>(null);
+  
     useEffect(() => {
-    const checkLogin = () => {
-      const user = localStorage.getItem("user");
-      setIsLoggedIn(!!user);
-    };
-
-    checkLogin();
-  }, []);
+      const checkLogin = async () => {
+        const { data: authData } = await supabase.auth.getUser();
+  
+        if (!authData?.user) {
+          setRole(null);
+          return;
+        }
+  
+        const { data: profileData, error } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", authData.user.id)
+          .single();
+  
+        if (error || !profileData) {
+          setRole(null);
+          return;
+        }
+  
+        setRole(profileData.role ?? "user");
+      };
+  
+      checkLogin(); // check on mount
+  
+      window.addEventListener("authChange", checkLogin); // same-tab updates
+  
+      const { data: listener } = supabase.auth.onAuthStateChange(() => {
+        checkLogin();
+      });
+  
+      return () => {
+        window.removeEventListener("authChange", checkLogin);
+        listener.subscription.unsubscribe();
+      };
+    }, []);
 
   useEffect(() => {
     if (open) {
@@ -65,7 +94,8 @@ export default function ColNavbar() {
           <NavItem href="#vision" onClick={() => setOpen(false)}>Vision</NavItem>
           <NavItem href="#team" onClick={() => setOpen(false)}>Team</NavItem>
           <NavItem href="#product" onClick={() => setOpen(false)}>Product</NavItem>
-          {isLoggedIn && <NavItem href="/profile">Profile</NavItem>}
+          {role === "admin" && <NavItem href="/Admin">Dashboard</NavItem>}
+          {role === "user" && <NavItem href="/profile">Profile</NavItem>}
         </div>
       </div>
     </section>
