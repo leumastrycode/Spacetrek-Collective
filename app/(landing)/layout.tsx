@@ -11,7 +11,7 @@ export default function LandingLayout({
   return (
     <div className="relative bg-[#0a0a0a] text-white overflow-x-hidden overflow-y-auto scroll-smooth no-scrollbar">
       <StarsWrapper />
-      <div className="relative z-10">
+      <div className="relative z-50">
         <Navbar />
         <main className="w-full flex flex-col">{children}</main>
         <Footer />
