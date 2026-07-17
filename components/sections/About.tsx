@@ -91,7 +91,7 @@ export default function About() {
             {!isLoggedIn && (
               <div className="flex justify-end mt-5">
                 <button 
-                  className="bg-[#3D2FFA] text-[#E6EAF0] py-3 px-6 rounded-md hover:bg-[#2A1FC7] transition-colors duration-300 z-50 text-[20px] sm:text-[18px] font-roboto"
+                  className="bg-[#3D2FFA] text-[#E6EAF0] py-3 px-6 rounded-md hover:bg-[#2A1FC7] transition-colors duration-300 z-40 text-[20px] sm:text-[18px] font-roboto"
                   onClick={() => setActiveModal('register')}
                 >
                   Join Us

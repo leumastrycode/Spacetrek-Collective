@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Sidebar({ 
   activeTab, 
   setActiveTab, 
@@ -70,6 +72,14 @@ export default function Sidebar({
             >
               Your Profile
             </button>
+            <Link href="/" 
+              onClick={() => { setActiveTab('back'); onClose(); }}
+              className={`w-full p-5 text-left transition-colors duration-200 hover:text-white ${
+                activeTab === 'back' ? 'bg-indigo-600 text-white' : 'text-gray-300'
+              }`}
+            >
+              Back 
+            </Link>
           </div>
         </div>
       </div>

@@ -63,6 +63,11 @@ export default function AdminPage() {
             <ProfileAdmin />
           </div>
         )}
+
+        {activeTab === "back" && (
+          <div className="p-5">
+          </div>
+        )}
       </main>
     </div>
   );
