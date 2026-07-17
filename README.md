@@ -18,7 +18,7 @@
 
 **SpaceTrek Collective** is a creative design team focused on crafting distinctive and forward-thinking brand identities. Inspired by exploration and innovation, we help brands find their direction and translate it into clear, impactful visual designs.
 
-Every project is carefully crafted through a collaborative process, ensuring each identity is unique, purposeful, and built to stand out — providing top-tier design assets for any global business sector or theme.
+Every project is carefully crafted through a collaborative process, ensuring each identity is unique, purposeful, and built to stand out providing top-tier design assets for any global business sector or theme.
 
 ---
 
@@ -39,12 +39,13 @@ Every project is carefully crafted through a collaborative process, ensuring eac
 
 - **Smooth Login** — A quick pop-up window for signing in and registering, so users don't get redirected back and forth.
 - **Project Briefing** — Clients can easily customize their orders by picking the website's purpose, industry, visual style, and color vibe.
-- **Draft & Tracking** — Users can save their order drafts and track whether their website is still in progress or already done.
+- **Draft** — Users can save their order drafts and make sure their choises are correct or they can change it before make the order
 
 ### 🔐 Admin Features
 
 - **Secure Access** — The admin workspace is strictly locked and only accessible to verified administrator accounts.
 - **Analytics Dashboard** — Interactive charts showing order trends, popular design choices, and total active users.
+- **Dynamic Team Desc** — The admin can change their team description in the landing page.
 
 ---
 
